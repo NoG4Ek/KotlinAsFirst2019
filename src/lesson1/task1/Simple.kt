@@ -60,7 +60,7 @@ fun main() {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
-
+    return hours * 3600 + minutes * 60 + seconds
 /**
  * Тривиальная
  *
@@ -69,7 +69,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
-
+    return (sagenes * 48 * 4.445 + arshins * 3 * 4.445 + vershoks * 4.445) / 100
 /**
  * Тривиальная
  *
