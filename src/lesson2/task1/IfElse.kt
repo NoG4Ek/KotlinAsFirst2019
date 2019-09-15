@@ -157,17 +157,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (a + b > c && a + c > b && b + c > a) {
         if (sqr(c) == sqr(b) + sqr(a) || sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(c) + sqr(a))
             return 1
-        if (c > b && c > a) {
+        if (c >= b && c >= a) {
             if (sqr(c) > sqr(a) + sqr(b))
                 return 2
             else return 0
         }
-        if (a > b && a > c) {
+        if (a >= b && a >= c) {
             if (sqr(a) > sqr(b) + sqr(c))
                 return 2
             else return 0
         }
-        if (b > a && b > c) {
+        if (b >= a && b >= c) {
             if (sqr(b) > sqr(a) + sqr(c))
                 return 2
             else return 0
