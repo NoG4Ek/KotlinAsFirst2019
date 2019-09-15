@@ -155,24 +155,25 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (a + b > c && a + c > b && b + c > a) {
+        if (sqr(c) == sqr(b) + sqr(a) || sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(c) + sqr(a))
+            return 1
         if (c > b && c > a) {
-            if (sqr(c) == sqr(b) + sqr(a))
-                return 1
-            else if (sqr(c) > sqr(a) + sqr(b))
+            if (sqr(c) > sqr(a) + sqr(b))
                 return 2
-        } else if (a > b && a > c) {
-            if (sqr(a) == sqr(b) + sqr(c))
-                return 1
-            else if (sqr(a) > sqr(b) + sqr(c))
+            else return 0
+        }
+        if (a > b && a > c) {
+            if (sqr(a) > sqr(b) + sqr(c))
                 return 2
-        } else if (b > a && b > c) {
-            if (sqr(b) == sqr(a) + sqr(c))
-                return 1
-            else if (sqr(b) > sqr(a) + sqr(c))
+            else return 0
+        }
+        if (b > a && b > c) {
+            if (sqr(b) > sqr(a) + sqr(c))
                 return 2
-        } else return 0
-    } else return -1
-    return 5
+            else return 0
+        }
+    }
+    return -1
 }
 
 /**
@@ -184,11 +185,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (a <= c && b >= c) {
-        return b - c;
+    if (c >= a && d <= b)
+        return abs(d - c)
+    else if (a <= c && b >= c) {
+        return abs(b - c);
     } else if (a >= c && b <= d)
-        return a - b
+        return abs(a - b)
     else if (b >= d && a <= d)
-        return d - a
+        return abs(d - a)
     else return -1
 }

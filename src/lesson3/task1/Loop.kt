@@ -72,7 +72,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var n1 = n
+    var n1 = abs(n)
     var k = 0
     if (n1 == 0)
         return 1
@@ -129,7 +129,7 @@ fun lcm(m: Int, n: Int): Int {
         max = m
     else
         max = n
-    for (i in 2..max)
+    for (i in max downTo 2)
         if (m % i == 0 && n % i == 0) {
             nod = i
             break
@@ -209,7 +209,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
 
-    for (i in 1..sqrt(m.toDouble()).toInt() + 1)
+    for (i in 0..sqrt(m.toDouble()).toInt() + 1)
         if (sqr(i) == m || sqr(i) == n)
             return true
 
@@ -317,8 +317,8 @@ fun revert(n: Int): Int {
         n1 /= 10
     }
     n1 = n
-    for (i in dl downTo 1) {
-        o += ((n1 % 10) * pow(10.0, i.toDouble())).toInt() / 10
+    for (i in dl - 1 downTo 0) {
+        o += ((n1 % 10) * pow(10.0, i.toDouble())).toInt()
         n1 /= 10
     }
     return o
@@ -385,4 +385,24 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var value_num = 1
+    var num = 1
+    var last = 1
+    var r: Int
+    var o: Int
+    while (value_num < n) {
+        num++
+        var s_num = fib(num)
+        var ch = 0
+        last = s_num
+        while (s_num > 0) {
+            ch++
+            s_num /= 10
+        }
+        value_num += ch
+    }
+    r = value_num - n
+    o = (last / pow(10.0, r.toDouble())).toInt() % 10
+    return o
+}
