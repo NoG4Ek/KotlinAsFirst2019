@@ -3,6 +3,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
+import java.lang.Math.pow
 import kotlin.math.sqrt
 
 /**
@@ -115,14 +117,28 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var abs = 0.0
+    if (v.isEmpty())
+        return 0.0
+    for (i in 0 until v.size)
+        abs += sqr(v[i])
+    return sqrt(abs)
+}
 
 /**
  * Простая
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    var sum = 0.0
+    if (list.isEmpty())
+        return 0.0
+    for (i in 0 until list.size)
+        sum += list[i]
+    return sum / list.size
+}
 
 /**
  * Средняя
@@ -132,7 +148,15 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    var aver = 0.0
+    for (i in 0 until list.size)
+        aver += list[i]
+    aver /= list.size
+    for (i in 0 until list.size)
+        list[i] -= aver
+    return list
+}
 
 /**
  * Средняя
@@ -141,7 +165,14 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    var c = 0
+    if (a.isEmpty() || b.isEmpty())
+        return 0
+    for (i in 0 until a.size)
+        c += a[i] * b[i]
+    return c
+}
 
 /**
  * Средняя
@@ -151,7 +182,14 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    var px = 0
+    if (p.isEmpty())
+        return 0
+    for (i in 0 until p.size)
+        px += p[i] * pow(x.toDouble(), i.toDouble()).toInt()
+    return px
+}
 
 /**
  * Средняя
@@ -163,7 +201,11 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    for (i in 1 until list.size)
+        list[i] = list[i] + list[i - 1]
+    return list
+}
 
 /**
  * Средняя
@@ -172,7 +214,19 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var del = 2
+    var um = n
+    var list = mutableListOf<Int>()
+    while (um != 1) {
+        if (um % del == 0) {
+            list.add(del)
+            um /= del
+        } else
+            del++
+    }
+    return list
+}
 
 /**
  * Сложная
@@ -181,7 +235,19 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var del = 2
+    var um = n
+    var list = mutableListOf<Int>()
+    while (um != 1) {
+        if (um % del == 0) {
+            list.add(del)
+            um /= del
+        } else
+            del++
+    }
+    return list.joinToString(separator = "*")
+}
 
 /**
  * Средняя
@@ -190,7 +256,20 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var list = mutableListOf<Int>()
+    var n1 = n
+    if (n1 < base)
+        return listOf(n1)
+    else {
+        while (n1 >= base) {
+            list.add(n1 % base)
+            n1 /= base
+        }
+        list.add(n1)
+    }
+    return list.reversed()
+}
 
 /**
  * Сложная
@@ -212,7 +291,12 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var o = 0
+    for (i in digits.size downTo 1)
+        o += digits[i - 1] * pow(base.toDouble(), (digits.size - i).toDouble()).toInt()
+    return o
+}
 
 /**
  * Сложная
@@ -245,4 +329,132 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var list = mutableListOf<String>()
+    var n1 = n
+    var ch = 0
+    var p = 0
+    var b = false
+    var err_d = false
+    var err_t = false
+    while (n1 > 0) {
+        ch++
+        n1 /= 10
+    }
+    n1 = n
+    if (ch > 1) {
+        if (n1 / 10 % 10 == 1)
+            err_d = true
+        if (n1 / 10000 % 10 == 1)
+            err_t = true
+    }
+    if (ch == 2)
+        if (n1 / 10 == 1)
+            when (n1 % 10) {
+                0 -> return "десять"
+                1 -> return "одиннадцать"
+                2 -> return "двенадцать"
+                3 -> return "тринадцать"
+                4 -> return "четырнадцать"
+                5 -> return "пятнадцать"
+                6 -> return "шестнадцать"
+                7 -> return "семнадцать"
+                8 -> return "восемнадцать"
+                9 -> return "девятнадцать"
+            }
+    var i = 1
+    while (i <= ch) {
+        when (i) {
+            1 -> {
+                if ((!err_d || (err_d && p != 0)) && (!err_t || (err_t && p != 3))) {
+                    when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
+                        1 -> if (p == 0) list.add("один") else list.add("одна")
+                        2 -> if (p == 0) list.add("два") else list.add("две")
+                        3 -> list.add("три")
+                        4 -> list.add("четыре")
+                        5 -> list.add("пять")
+                        6 -> list.add("шесть")
+                        7 -> list.add("семь")
+                        8 -> list.add("восемь")
+                        9 -> list.add("девять")
+                    }
+                }
+                i++
+            }
+            2 -> {
+                if (err_d && p == 1 || err_t && p == 4) {
+                    if (err_d) {
+                        when (n1 % 10) {
+                            0 -> list.add("десять")
+                            1 -> list.add("одиннадцать")
+                            2 -> list.add("двенадцать")
+                            3 -> list.add("тринадцать")
+                            4 -> list.add("четырнадцать")
+                            5 -> list.add("пятнадцать")
+                            6 -> list.add("шестнадцать")
+                            7 -> list.add("семнадцать")
+                            8 -> list.add("восемнадцать")
+                            9 -> list.add("девятнадцать")
+                        }
+                    } else {
+                        when (n1 / 1000 % 10) {
+                            0 -> list.add("десять")
+                            1 -> list.add("одиннадцать")
+                            2 -> list.add("двенадцать")
+                            3 -> list.add("тринадцать")
+                            4 -> list.add("четырнадцать")
+                            5 -> list.add("пятнадцать")
+                            6 -> list.add("шестнадцать")
+                            7 -> list.add("семнадцать")
+                            8 -> list.add("восемнадцать")
+                            9 -> list.add("девятнадцать")
+                        }
+                    }
+                } else
+                    when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
+                        2 -> list.add("двадцать")
+                        3 -> list.add("тридцать")
+                        4 -> list.add("сорок")
+                        5 -> list.add("пятьдесят")
+                        6 -> list.add("шестьдесят")
+                        7 -> list.add("семьдесят")
+                        8 -> list.add("восемьдесят")
+                        9 -> list.add("девяносто")
+                    }
+                i++
+            }
+            3 -> {
+                when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
+                    1 -> list.add("сто")
+                    2 -> list.add("двести")
+                    3 -> list.add("триста")
+                    4 -> list.add("четыреста")
+                    5 -> list.add("пятьсот")
+                    6 -> list.add("шестьсот")
+                    7 -> list.add("семьсот")
+                    8 -> list.add("восемьсот")
+                    9 -> list.add("девятьсот")
+                }
+                i++
+            }
+            4 -> {
+                if (n1 / 1000 % 10 == 1)
+                    list.add("тысяча")
+                if (n1 / 1000 % 10 in 2..4)
+                    list.add("тысячи")
+                if (n1 / 1000 % 10 == 0 || n1 / 1000 % 10 in 5..9)
+                    list.add("тысяч")
+                i = 1
+                ch -= 3
+                b = true
+            }
+
+        }
+        if (!b)
+            p++
+        else
+            b = false
+    }
+    var list1 = list.reversed()
+    return list1.joinToString(separator = " ")
+}

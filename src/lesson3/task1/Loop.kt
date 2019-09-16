@@ -121,15 +121,15 @@ fun fib(n: Int): Int {
  */
 
 fun lcm(m: Int, n: Int): Int {
-    var max: Int
+    var min: Int
     var nod = 1
     if (m == n)
         return m
-    if (m > n)
-        max = m
+    if (m < n)
+        min = m
     else
-        max = n
-    for (i in max downTo 2)
+        min = n
+    for (i in min downTo 2)
         if (m % i == 0 && n % i == 0) {
             nod = i
             break
@@ -258,7 +258,6 @@ fun collatzSteps(x: Int): Int {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    //Не могу понять, почему не работает , также , как и с cos
     var sin = x
     var h = 3
     var ch = 1
