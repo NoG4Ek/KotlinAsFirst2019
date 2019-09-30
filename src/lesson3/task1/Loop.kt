@@ -3,8 +3,9 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
-import java.lang.Math.pow
+import java.lang.Math.*
 import kotlin.math.abs
+import kotlin.math.ceil
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -95,19 +96,13 @@ fun fib(n: Int): Int {
     var f = 1
     var s = 1
     var o = 0
-    var ch = 0
     if (n == 1 || n == 2)
         return 1
     else {
         for (m in 3..n) {
-            ch++
-            if (ch % 2 != 0) {
-                o = f + s
-                f = o
-            } else {
-                o = f + s
-                s = o
-            }
+            o = f + s
+            f = s
+            s = o
         }
     }
     return o
@@ -121,15 +116,11 @@ fun fib(n: Int): Int {
  */
 
 fun lcm(m: Int, n: Int): Int {
-    var min: Int
+    val mi: Int = m.coerceAtMost(n)
     var nod = 1
     if (m == n)
         return m
-    if (m < n)
-        min = m
-    else
-        min = n
-    for (i in min downTo 2)
+    for (i in mi downTo 2)
         if (m % i == 0 && n % i == 0) {
             nod = i
             break
@@ -143,19 +134,17 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var o = n
     var a = 3
     if (n % 2 == 0)
         return 2
     else
         for (i in 1..n / 2) {
             if (n % a == 0) {
-                o = a
-                break
+                return a
             }
             a += 2
         }
-    return o
+    return 0
 }
 
 /**
@@ -163,23 +152,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var o = n
-    if (n % 2 == 0) {
-        for (i in n / 2 downTo 1)
-            if (n % i == 0) {
-                o = i
-                break
-            }
-    } else {
-        for (i in (n - 1) / 2 downTo 1)
-            if (n % i == 0) {
-                o = i
-                break
-            }
-    }
-    return o
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -189,12 +162,8 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var min: Int
-    if (m < n)
-        min = m
-    else
-        min = n
-    for (i in 2..min)
+    val mi: Int = m.coerceAtMost(n)
+    for (i in 2..mi)
         if (m % i == 0 && n % i == 0)
             return false
     return true
@@ -209,11 +178,10 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
 
-    for (i in 0..sqrt(m.toDouble()).toInt() + 1)
-        if (sqr(i) == m || sqr(i) == n)
-            return true
-
-    if ((sqrt(n.toDouble()).toInt() - sqrt(m.toDouble()).toInt() >= 1.0))
+    if ((sqrt(n.toDouble()).toInt() - sqrt(m.toDouble()).toInt() >= 1.0) ||
+        floor(sqrt(m.toDouble())) == sqrt(m.toDouble()) ||
+        ceil(sqrt(n.toDouble())) == sqrt(n.toDouble())
+    )
         return true
 
     return false
@@ -258,17 +226,17 @@ fun collatzSteps(x: Int): Int {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    var sin = x
+    var x1 = x % (2 * PI)
     var h = 3
     var ch = 1
-    while (abs(x.pow(h) / factorial(h)) >= abs(eps)) {
+    var sin = x1
+    while (abs(x1.pow(h) / factorial(h)) >= abs(eps)) {
         if (ch % 2 != 0) {
-            sin -= x.pow(h) / factorial(h)
-            ch++
+            sin -= x1.pow(h) / factorial(h)
         } else {
-            sin += x.pow(h) / factorial(h)
-            ch++
+            sin += x1.pow(h) / factorial(h)
         }
+        ch++
         h += 2
     }
     return sin
@@ -284,17 +252,17 @@ fun sin(x: Double, eps: Double): Double {
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
 fun cos(x: Double, eps: Double): Double {
-    var cos = 1.0
+    var x1 = x % (2 * PI)
     var h = 2
     var ch = 1
-    while (abs(x.pow(h) / factorial(h)) >= abs(eps)) {
+    var cos = 1.0
+    while (abs(x1.pow(h) / factorial(h)) >= abs(eps)) {
         if (ch % 2 != 0) {
-            cos -= x.pow(h) / factorial(h)
-            ch++
+            cos -= x1.pow(h) / factorial(h)
         } else {
-            cos += x.pow(h) / factorial(h)
-            ch++
+            cos += x1.pow(h) / factorial(h)
         }
+        ch++
         h += 2
     }
     return cos
@@ -311,10 +279,7 @@ fun revert(n: Int): Int {
     var n1 = n
     var dl = 1
     var o = 0
-    while (n1 / 10 > 0) {
-        dl++
-        n1 /= 10
-    }
+    dl = digitNumber(n1)
     n1 = n
     for (i in dl - 1 downTo 0) {
         o += ((n1 % 10) * pow(10.0, i.toDouble())).toInt()
@@ -354,24 +319,19 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var value_num = 1
+    var valueNum = 1
     var num = 1
     var last = 1
-    var r: Int
-    var o: Int
-    while (value_num < n) {
+    while (valueNum < n) {
         num++
-        var s_num = sqr(num)
+        var sNum = sqr(num)
         var ch = 0
-        last = s_num
-        while (s_num > 0) {
-            ch++
-            s_num /= 10
-        }
-        value_num += ch
+        last = sNum
+        ch = digitNumber(sNum)
+        valueNum += ch
     }
-    r = value_num - n
-    o = (last / pow(10.0, r.toDouble())).toInt() % 10
+    val r = valueNum - n
+    val o = (last / pow(10.0, r.toDouble())).toInt() % 10
     return o
 }
 
@@ -385,12 +345,12 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var value_num = 1
+    var valueNum = 1
     var num = 1
     var last = 1
     var r: Int
     var o: Int
-    while (value_num < n) {
+    while (valueNum < n) {
         num++
         var s_num = fib(num)
         var ch = 0
@@ -399,9 +359,9 @@ fun fibSequenceDigit(n: Int): Int {
             ch++
             s_num /= 10
         }
-        value_num += ch
+        valueNum += ch
     }
-    r = value_num - n
+    r = valueNum - n
     o = (last / pow(10.0, r.toDouble())).toInt() % 10
     return o
 }

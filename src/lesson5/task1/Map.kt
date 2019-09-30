@@ -257,7 +257,25 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var ost = mutableListOf<Int>()
+    var nom = mutableListOf<Int>()
+    for (i in 0 until number) {
+        ost.add(i, 0)
+        nom.add(i, 0)
+    }
+    if (list.isNotEmpty()) {
+        for (i in list.indices) {
+            if (ost[number - (list[i] % number)] > 0)
+                return Pair(nom[number - (list[i] % number)], i)
+            else {
+                ost[list[i] % number]++
+                nom[list[i] % number] = i
+            }
+        }
+    }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная
@@ -280,4 +298,51 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    var arr: Array<Array<Pair<Int, List<String>>>> =
+        Array(treasures.size) { Array(capacity) { Pair(0, listOf<String>()) } }
+    //var arr = mutableMapOf<Int, MutableMap<Int, Pair<Int, MutableList<String>>>>()
+    var dob = mutableListOf<String>()
+    var prev: Int
+    var curr: Int
+
+    for (i in 0 until treasures.size) {
+        for (j in 0 until capacity) {
+            if (i == 0) {
+                if (treasures[(treasures.keys).toList()[i]]!!.first < j) {
+                    dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
+                    arr[i][j] = Pair(treasures[(treasures.keys).toList()[i]]!!.second, arr[i][j].second + (treasures.keys).toList()[i])
+                    dob.clear()
+                }
+            } else {
+                if (j == treasures[(treasures.keys).toList()[i]]!!.first) {
+                    dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
+                    arr[i][j] = Pair(treasures[(treasures.keys).toList()[i]]!!.second, dob)
+                    dob.clear()
+                }
+                if (j > treasures[(treasures.keys).toList()[i]]!!.first) {
+                    prev = arr[i - 1][j].first
+                    curr = arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].first
+                    if (prev >= curr + treasures[(treasures.keys).toList()[i]]!!.first) {
+                        arr[i][j] = Pair(prev, arr[i - 1][j].second)
+                    }
+                    if (prev < curr + treasures[(treasures.keys).toList()[i]]!!.first) {
+                        dob.add(arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].second.toString() + (treasures.keys).toList()[i])
+                        arr[i][j] = Pair(curr, dob)
+                        dob.clear()
+                    }
+                }
+            }
+        }
+    }
+    var max = -1
+    var ind = 0
+    for (i in 0 until treasures.size) {
+        if (arr[i][capacity - 1].first > max) {
+            max = arr[i][capacity - 1].first
+            ind = i
+        }
+    }
+
+    return arr[ind][capacity - 1].second.toSet()
+}

@@ -119,8 +119,6 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var abs = 0.0
-    if (v.isEmpty())
-        return 0.0
     for (i in 0 until v.size)
         abs += sqr(v[i])
     return sqrt(abs)
@@ -149,10 +147,7 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var aver = 0.0
-    for (i in 0 until list.size)
-        aver += list[i]
-    aver /= list.size
+    var aver = mean(list)
     for (i in 0 until list.size)
         list[i] -= aver
     return list
@@ -217,7 +212,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     var del = 2
     var um = n
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     while (um != 1) {
         if (um % del == 0) {
             list.add(del)
@@ -236,16 +231,7 @@ fun factorize(n: Int): List<Int> {
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
 fun factorizeToString(n: Int): String {
-    var del = 2
-    var um = n
-    var list = mutableListOf<Int>()
-    while (um != 1) {
-        if (um % del == 0) {
-            list.add(del)
-            um /= del
-        } else
-            del++
-    }
+    val list = factorize(n)
     return list.joinToString(separator = "*")
 }
 
@@ -257,7 +243,7 @@ fun factorizeToString(n: Int): String {
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var n1 = n
     if (n1 < base)
         return listOf(n1)
@@ -291,12 +277,7 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int {
-    var o = 0
-    for (i in digits.size downTo 1)
-        o += digits[i - 1] * pow(base.toDouble(), (digits.size - i).toDouble()).toInt()
-    return o
-}
+fun decimal(digits: List<Int>, base: Int): Int = polynom(digits.reversed(), base)
 
 /**
  * Сложная
@@ -330,13 +311,51 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var list = mutableListOf<String>()
+    val list = mutableListOf<String>()
     var n1 = n
     var ch = 0
     var p = 0
     var b = false
-    var err_d = false
-    var err_t = false
+    var errD = false
+    var errT = false
+    val numName = mutableListOf<String>(
+        "один",
+        "два",
+        "три",
+        "четыре",
+        "пять",
+        "шесть",
+        "семь",
+        "восемь",
+        "девять",
+        "десять",
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестндцать",
+        "семнадцать",
+        "восемнадцать",
+        "девятнадцать",
+        "двадцать",
+        "тридцать",
+        "сорок",
+        "пятьдесят",
+        "шестьдесят",
+        "семьдесят",
+        "восемьдесят",
+        "девяносто",
+        "сто",
+        "двести",
+        "триста",
+        "четыреста",
+        "пятьсот",
+        "шестьсот",
+        "семьсот",
+        "восемьсот",
+        "девятьсот"
+    )
     while (n1 > 0) {
         ch++
         n1 /= 10
@@ -344,105 +363,49 @@ fun russian(n: Int): String {
     n1 = n
     if (ch > 1) {
         if (n1 / 10 % 10 == 1)
-            err_d = true
+            errD = true
         if (n1 / 10000 % 10 == 1)
-            err_t = true
+            errT = true
     }
     if (ch == 2)
         if (n1 / 10 == 1)
-            when (n1 % 10) {
-                0 -> return "десять"
-                1 -> return "одиннадцать"
-                2 -> return "двенадцать"
-                3 -> return "тринадцать"
-                4 -> return "четырнадцать"
-                5 -> return "пятнадцать"
-                6 -> return "шестнадцать"
-                7 -> return "семнадцать"
-                8 -> return "восемнадцать"
-                9 -> return "девятнадцать"
-            }
+            return numName[9 + (n % 10)]
     var i = 1
     while (i <= ch) {
         when (i) {
             1 -> {
-                if ((!err_d || (err_d && p != 0)) && (!err_t || (err_t && p != 3))) {
+                if ((!errD || (errD && p != 0)) && (!errT || (errT && p != 3))
+                    && (n1 / pow(10.0, p.toDouble()) % 10).toInt() != 0
+                ) {
                     when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
                         1 -> if (p == 0) list.add("один") else list.add("одна")
                         2 -> if (p == 0) list.add("два") else list.add("две")
-                        3 -> list.add("три")
-                        4 -> list.add("четыре")
-                        5 -> list.add("пять")
-                        6 -> list.add("шесть")
-                        7 -> list.add("семь")
-                        8 -> list.add("восемь")
-                        9 -> list.add("девять")
+                        else -> list.add(numName[(n1 / pow(10.0, p.toDouble()) % 10).toInt() - 1])
                     }
                 }
                 i++
             }
             2 -> {
-                if (err_d && p == 1 || err_t && p == 4) {
-                    if (err_d) {
-                        when (n1 % 10) {
-                            0 -> list.add("десять")
-                            1 -> list.add("одиннадцать")
-                            2 -> list.add("двенадцать")
-                            3 -> list.add("тринадцать")
-                            4 -> list.add("четырнадцать")
-                            5 -> list.add("пятнадцать")
-                            6 -> list.add("шестнадцать")
-                            7 -> list.add("семнадцать")
-                            8 -> list.add("восемнадцать")
-                            9 -> list.add("девятнадцать")
-                        }
+                if (errD && p == 1 || errT && p == 4) {
+                    if (errD) {
+                        list.add(numName[10 + (n % 10) - 1])
                     } else {
-                        when (n1 / 1000 % 10) {
-                            0 -> list.add("десять")
-                            1 -> list.add("одиннадцать")
-                            2 -> list.add("двенадцать")
-                            3 -> list.add("тринадцать")
-                            4 -> list.add("четырнадцать")
-                            5 -> list.add("пятнадцать")
-                            6 -> list.add("шестнадцать")
-                            7 -> list.add("семнадцать")
-                            8 -> list.add("восемнадцать")
-                            9 -> list.add("девятнадцать")
-                        }
+                        list.add(numName[9 + (n1 / 1000 % 10)])
                     }
-                } else
-                    when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
-                        2 -> list.add("двадцать")
-                        3 -> list.add("тридцать")
-                        4 -> list.add("сорок")
-                        5 -> list.add("пятьдесят")
-                        6 -> list.add("шестьдесят")
-                        7 -> list.add("семьдесят")
-                        8 -> list.add("восемьдесят")
-                        9 -> list.add("девяносто")
-                    }
+                } else if ((n1 / pow(10.0, p.toDouble()) % 10).toInt() !in 0..1)
+                    list.add(numName[17 + (n1 / pow(10.0, p.toDouble()) % 10).toInt()])
                 i++
             }
             3 -> {
-                when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
-                    1 -> list.add("сто")
-                    2 -> list.add("двести")
-                    3 -> list.add("триста")
-                    4 -> list.add("четыреста")
-                    5 -> list.add("пятьсот")
-                    6 -> list.add("шестьсот")
-                    7 -> list.add("семьсот")
-                    8 -> list.add("восемьсот")
-                    9 -> list.add("девятьсот")
-                }
+                list.add(numName[27 + (n1 / pow(10.0, p.toDouble()) % 10).toInt()])
                 i++
             }
             4 -> {
-                if (n1 / 1000 % 10 == 1 && !err_t)
+                if (n1 / 1000 % 10 == 1 && !errT)
                     list.add("тысяча")
-                if (n1 / 1000 % 10 in 2..4 && !err_t)
+                if (n1 / 1000 % 10 in 2..4 && !errT)
                     list.add("тысячи")
-                if (n1 / 1000 % 10 == 0 || n1 / 1000 % 10 in 5..9 || err_t)
+                if (n1 / 1000 % 10 == 0 || n1 / 1000 % 10 in 5..9 || errT)
                     list.add("тысяч")
                 i = 1
                 ch -= 3
@@ -455,6 +418,6 @@ fun russian(n: Int): String {
         else
             b = false
     }
-    var list1 = list.reversed()
+    val list1 = list.reversed()
     return list1.joinToString(separator = " ")
 }
