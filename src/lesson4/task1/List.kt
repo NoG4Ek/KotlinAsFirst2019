@@ -397,7 +397,10 @@ fun russian(n: Int): String {
                 i++
             }
             3 -> {
-                list.add(numName[27 + (n1 / pow(10.0, p.toDouble()) % 10).toInt()])
+                if ((n1 / pow(10.0, p.toDouble()) % 10).toInt() != 0)
+                    when ((n1 / pow(10.0, p.toDouble()) % 10).toInt()) {
+                        else -> list.add(numName[26 + (n1 / pow(10.0, p.toDouble()) % 10).toInt()])
+                    }
                 i++
             }
             4 -> {

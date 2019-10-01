@@ -264,7 +264,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         ost.add(i, 0)
         nom.add(i, 0)
     }
-    if (list.isNotEmpty()) {
+    if (list.isNotEmpty() && list.size != 1) {
         for (i in list.indices) {
             if (ost[number - (list[i] % number)] > 0)
                 return Pair(nom[number - (list[i] % number)], i)
@@ -305,6 +305,9 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var dob = mutableListOf<String>()
     var prev: Int
     var curr: Int
+
+    if(treasures.isEmpty())
+        return setOf()
 
     for (i in 0 until treasures.size) {
         for (j in 0 until capacity) {
