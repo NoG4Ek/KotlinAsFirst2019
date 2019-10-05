@@ -147,7 +147,7 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var aver = mean(list)
+    val aver = mean(list)
     for (i in 0 until list.size)
         list[i] -= aver
     return list
@@ -179,8 +179,6 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var px = 0
-    if (p.isEmpty())
-        return 0
     for (i in 0 until p.size)
         px += p[i] * pow(x.toDouble(), i.toDouble()).toInt()
     return px
@@ -334,7 +332,7 @@ fun russian(n: Int): String {
         "тринадцать",
         "четырнадцать",
         "пятнадцать",
-        "шестндцать",
+        "шестнадцать",
         "семнадцать",
         "восемнадцать",
         "девятнадцать",

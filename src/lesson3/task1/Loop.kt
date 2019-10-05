@@ -77,13 +77,11 @@ fun digitNumber(n: Int): Int {
     var k = 0
     if (n1 == 0)
         return 1
-    else {
-        while (n1 > 0) {
-            n1 /= 10
-            k++
-        }
-        return k
+    while (n1 > 0) {
+        n1 /= 10
+        k++
     }
+    return k
 }
 
 /**
@@ -98,12 +96,10 @@ fun fib(n: Int): Int {
     var o = 0
     if (n == 1 || n == 2)
         return 1
-    else {
-        for (m in 3..n) {
-            o = f + s
-            f = s
-            s = o
-        }
+    for (m in 3..n) {
+        o = f + s
+        f = s
+        s = o
     }
     return o
 }
@@ -116,7 +112,7 @@ fun fib(n: Int): Int {
  */
 
 fun lcm(m: Int, n: Int): Int {
-    val mi: Int = m.coerceAtMost(n)
+    val mi = m.coerceAtMost(n)
     var nod = 1
     if (m == n)
         return m
@@ -162,7 +158,7 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    val mi: Int = m.coerceAtMost(n)
+    val mi = m.coerceAtMost(n)
     for (i in 2..mi)
         if (m % i == 0 && n % i == 0)
             return false
@@ -176,16 +172,10 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-
-    if ((sqrt(n.toDouble()).toInt() - sqrt(m.toDouble()).toInt() >= 1.0) ||
+fun squareBetweenExists(m: Int, n: Int): Boolean = (ceil(sqrt(n.toDouble())) - floor(sqrt(m.toDouble())) >= 1.0) ||
         floor(sqrt(m.toDouble())) == sqrt(m.toDouble()) ||
         ceil(sqrt(n.toDouble())) == sqrt(n.toDouble())
-    )
-        return true
 
-    return false
-}
 
 /**
  * Средняя
@@ -226,11 +216,12 @@ fun collatzSteps(x: Int): Int {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    var x1 = x % (2 * PI)
+    val x1 = x % (2 * PI)
     var h = 3
     var ch = 1
     var sin = x1
-    while (abs(x1.pow(h) / factorial(h)) >= abs(eps)) {
+    var mem = abs(x1.pow(h) / factorial(h))
+    while (mem >= abs(eps)) {
         if (ch % 2 != 0) {
             sin -= x1.pow(h) / factorial(h)
         } else {
@@ -252,18 +243,20 @@ fun sin(x: Double, eps: Double): Double {
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
 fun cos(x: Double, eps: Double): Double {
-    var x1 = x % (2 * PI)
+    val x1 = x % (2 * PI)
     var h = 2
     var ch = 1
     var cos = 1.0
-    while (abs(x1.pow(h) / factorial(h)) >= abs(eps)) {
+    var mem = x1.pow(h) / factorial(h)
+    while (abs(mem) >= abs(eps)) {
         if (ch % 2 != 0) {
-            cos -= x1.pow(h) / factorial(h)
+            cos -= mem
         } else {
-            cos += x1.pow(h) / factorial(h)
+            cos += mem
         }
         ch++
         h += 2
+        mem = (mem * x1.pow(2.0)) / (h * (h - 1))
     }
     return cos
 }
@@ -277,10 +270,8 @@ fun cos(x: Double, eps: Double): Double {
  */
 fun revert(n: Int): Int {
     var n1 = n
-    var dl = 1
     var o = 0
-    dl = digitNumber(n1)
-    n1 = n
+    val dl = digitNumber(n1)
     for (i in dl - 1 downTo 0) {
         o += ((n1 % 10) * pow(10.0, i.toDouble())).toInt()
         n1 /= 10
@@ -324,15 +315,14 @@ fun squareSequenceDigit(n: Int): Int {
     var last = 1
     while (valueNum < n) {
         num++
-        var sNum = sqr(num)
+        val sNum = sqr(num)
         var ch = 0
         last = sNum
         ch = digitNumber(sNum)
         valueNum += ch
     }
     val r = valueNum - n
-    val o = (last / pow(10.0, r.toDouble())).toInt() % 10
-    return o
+    return (last / pow(10.0, r.toDouble())).toInt() % 10
 }
 
 /**
@@ -348,20 +338,16 @@ fun fibSequenceDigit(n: Int): Int {
     var valueNum = 1
     var num = 1
     var last = 1
-    var r: Int
-    var o: Int
     while (valueNum < n) {
         num++
-        var s_num = fib(num)
+        var sNum = fib(num)
         var ch = 0
-        last = s_num
-        while (s_num > 0) {
+        last = sNum
+        while (sNum > 0) {
             ch++
-            s_num /= 10
+            sNum /= 10
         }
         valueNum += ch
     }
-    r = valueNum - n
-    o = (last / pow(10.0, r.toDouble())).toInt() % 10
-    return o
+    return (last / pow(10.0, (valueNum - n).toDouble())).toInt() % 10
 }

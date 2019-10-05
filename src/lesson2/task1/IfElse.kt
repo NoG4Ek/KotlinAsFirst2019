@@ -6,6 +6,7 @@ import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -152,23 +153,12 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if (a + b > c && a + c > b && b + c > a) {
-        if (sqr(c) == sqr(b) + sqr(a) || sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(c) + sqr(a))
-            return 1
-        if (c >= b && c >= a) {
-            if (sqr(c) > sqr(a) + sqr(b))
-                return 2
-            else return 0
-        }
-        if (a >= b && a >= c) {
-            if (sqr(a) > sqr(b) + sqr(c))
-                return 2
-            else return 0
-        }
-        if (b >= a && b >= c) {
-            if (sqr(b) > sqr(a) + sqr(c))
-                return 2
-            else return 0
+    when {
+        a + b > c && a + c > b && b + c > a -> when (a + b > c && a + c > b && b + c > a) {
+            sqr(c) == sqr(b) + sqr(a) || sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(c) + sqr(a) -> return 1
+            c >= b && c >= a -> return if (sqr(c) > sqr(a) + sqr(b)) 2 else 0
+            a >= b && a >= c -> return if (sqr(a) > sqr(b) + sqr(c)) 2 else 0
+            b >= a && b >= c -> return if (sqr(b) > sqr(a) + sqr(c)) 2 else 0
         }
     }
     return -1
@@ -182,14 +172,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return if (c >= a && d <= b)
-        abs(d - c)
-    else if (a <= c && b >= c) {
-        abs(b - c)
-    } else if (a >= c && b <= d)
-        abs(a - b)
-    else if (b >= d && a <= d)
-        abs(d - a)
-    else -1
-}
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+    when {
+        c >= a && d <= b -> abs(d - c)
+        c in a..b -> abs(b - c)
+        a >= c && b <= d -> abs(a - b)
+        d in a..b -> abs(d - a)
+        else -> -1
+    }
+
