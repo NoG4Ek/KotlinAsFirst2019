@@ -133,13 +133,12 @@ fun minDivisor(n: Int): Int {
     var a = 3
     if (n % 2 == 0)
         return 2
-    else
-        for (i in 1..n / 2) {
-            if (n % a == 0) {
-                return a
-            }
-            a += 2
+    for (i in 1..n / 2) {
+        if (n % a == 0) {
+            return a
         }
+        a += 2
+    }
     return 0
 }
 
@@ -172,10 +171,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = (ceil(sqrt(n.toDouble())) - floor(sqrt(m.toDouble())) >= 1.0) ||
-        floor(sqrt(m.toDouble())) == sqrt(m.toDouble()) ||
-        ceil(sqrt(n.toDouble())) == sqrt(n.toDouble())
-
+fun squareBetweenExists(m: Int, n: Int): Boolean = (floor(sqrt(n.toDouble())) >= ceil(sqrt(m.toDouble())))
 
 /**
  * Средняя
@@ -229,6 +225,7 @@ fun sin(x: Double, eps: Double): Double {
         }
         ch++
         h += 2
+        mem = abs(x1.pow(h) / factorial(h))
     }
     return sin
 }

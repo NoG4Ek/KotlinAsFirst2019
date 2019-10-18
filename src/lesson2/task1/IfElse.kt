@@ -152,17 +152,15 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    when {
-        a + b > c && a + c > b && b + c > a -> when (a + b > c && a + c > b && b + c > a) {
-            sqr(c) == sqr(b) + sqr(a) || sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(c) + sqr(a) -> return 1
-            c >= b && c >= a -> return if (sqr(c) > sqr(a) + sqr(b)) 2 else 0
-            a >= b && a >= c -> return if (sqr(a) > sqr(b) + sqr(c)) 2 else 0
-            b >= a && b >= c -> return if (sqr(b) > sqr(a) + sqr(c)) 2 else 0
-        }
+fun triangleKind(a: Double, b: Double, c: Double): Int =
+    if (a + b > c && a + c > b && b + c > a) when (a + b > c && a + c > b && b + c > a) {
+        sqr(c) == sqr(b) + sqr(a) || sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(c) + sqr(a) -> 1
+        c >= b && c >= a -> if (sqr(c) > sqr(a) + sqr(b)) 2 else 0
+        a >= b && a >= c -> if (sqr(a) > sqr(b) + sqr(c)) 2 else 0
+        b >= a && b >= c -> if (sqr(b) > sqr(a) + sqr(c)) 2 else 0
+        else -> -1
     }
-    return -1
-}
+    else -1
 
 /**
  * Средняя

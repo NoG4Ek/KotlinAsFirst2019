@@ -245,13 +245,11 @@ fun convert(n: Int, base: Int): List<Int> {
     var n1 = n
     if (n1 < base)
         return listOf(n1)
-    else {
-        while (n1 >= base) {
-            list.add(n1 % base)
-            n1 /= base
-        }
-        list.add(n1)
+    while (n1 >= base) {
+        list.add(n1 % base)
+        n1 /= base
     }
+    list.add(n1)
     return list.reversed()
 }
 
@@ -316,7 +314,7 @@ fun russian(n: Int): String {
     var b = false
     var errD = false
     var errT = false
-    val numName = mutableListOf<String>(
+    val numName = mutableListOf(
         "один",
         "два",
         "три",
