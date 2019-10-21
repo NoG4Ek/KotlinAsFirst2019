@@ -310,7 +310,10 @@ class Tests {
             findSumOfTwo(listOf(1, 2, 3), 6)
         )
     }
-
+    /*assertEquals(
+    Pair(-1, -1),
+    findSumOfTwo(emptyList(), 1)
+    )*/
     @Test
     @Tag("Impossible")
     fun bagPacking() {

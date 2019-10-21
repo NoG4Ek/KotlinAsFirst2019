@@ -262,6 +262,8 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val nom = mutableListOf<Int>()
     var ch = 0
     var f = -1
+    if (list.isEmpty())
+        return Pair(-1, -1)
     for (i in 0..number) {
         ost.add(i, 0)
         nom.add(i, 0)
