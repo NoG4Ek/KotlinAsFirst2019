@@ -260,17 +260,30 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val ost = mutableListOf<Int>()
     val nom = mutableListOf<Int>()
-    for (i in 0 until number) {
+    var ch = 0
+    var f = -1
+    for (i in 0..number) {
         ost.add(i, 0)
         nom.add(i, 0)
     }
-    if (list.isNotEmpty() && list.size != 1) {
-        for (i in list.indices) {
-            if (ost[number - (list[i] % number)] > 0)
-                return Pair(nom[number - (list[i] % number)], i)
-            else {
-                ost[list[i] % number]++
-                nom[list[i] % number] = i
+    if (number == 0) {
+        for (i in 0..list.size)
+            if (ch < 2) {
+                if (list[i] == 0) {
+                    ch++
+                    if (f == -1)
+                        f = i
+                }
+            } else return Pair(f, i - 1)
+    } else {
+        if (list.isNotEmpty() && list.size != 1) {
+            for (i in list.indices) {
+                if (ost[number - (list[i] % number)] > 0)
+                    return Pair(nom[number - (list[i] % number)], i)
+                else {
+                    ost[list[i] % number]++
+                    nom[list[i] % number] = i
+                }
             }
         }
     }
@@ -299,14 +312,13 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    var arr: Array<Array<Pair<Int, List<String>>>> =
-        Array(treasures.size) { Array(capacity) { Pair(0, listOf<String>()) } }
+    val arr = Array(treasures.size) { Array(capacity) { Pair(0, listOf<String>()) } }
     //var arr = mutableMapOf<Int, MutableMap<Int, Pair<Int, MutableList<String>>>>()
-    var dob = mutableListOf<String>()
+    val dob = mutableListOf<String>()
     var prev: Int
     var curr: Int
 
-    if(treasures.isEmpty())
+    if (treasures.isEmpty())
         return setOf()
 
     for (i in 0 until treasures.size) {
@@ -314,7 +326,10 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             if (i == 0) {
                 if (treasures[(treasures.keys).toList()[i]]!!.first < j) {
                     dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
-                    arr[i][j] = Pair(treasures[(treasures.keys).toList()[i]]!!.second, arr[i][j].second + (treasures.keys).toList()[i])
+                    arr[i][j] = Pair(
+                        treasures[(treasures.keys).toList()[i]]!!.second,
+                        arr[i][j].second + (treasures.keys).toList()[i]
+                    )
                     dob.clear()
                 }
             } else {
