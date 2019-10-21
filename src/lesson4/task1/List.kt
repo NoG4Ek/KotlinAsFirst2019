@@ -383,7 +383,7 @@ fun russian(n: Int): String {
             }
             2 -> {
                 if (errD && p == 1 || errT && p == 4) {
-                    if (errD) {
+                    if (errD && p == 1) {
                         list.add(numName[10 + (n % 10) - 1])
                     } else {
                         list.add(numName[9 + (n1 / 1000 % 10)])
