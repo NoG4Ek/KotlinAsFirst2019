@@ -314,7 +314,7 @@ fun russian(n: Int): String {
     var b = false
     var errD = false
     var errT = false
-    val numName = mutableListOf(
+    val numName = listOf(
         "один",
         "два",
         "три",

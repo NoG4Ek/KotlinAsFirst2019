@@ -269,7 +269,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         nom.add(i, 0)
     }
     if (number == 0) {
-        for (i in 0..list.size)
+        for (i in list.indices)
             if (ch < 2) {
                 if (list[i] == 0) {
                     ch++
@@ -278,7 +278,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
                 }
             } else return Pair(f, i - 1)
     } else {
-        if (list.isNotEmpty() && list.size != 1) {
             for (i in list.indices) {
                 if (list[i] == 0) {
                     if (ost[0] > 0) {
@@ -303,7 +302,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
                 }
             }
             }
-        }
     }
     return Pair(-1, -1)
 }
