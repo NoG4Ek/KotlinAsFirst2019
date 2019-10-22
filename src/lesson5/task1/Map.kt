@@ -262,6 +262,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val nom = mutableListOf<Int>()
     var ch = 0
     var f = -1
+    var s = -1
     if (list.isEmpty() || list.size == 1)
         return Pair(-1, -1)
     for (i in 0..number + 1) {
@@ -274,11 +275,15 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
                 if (ch < 2) {
                     if (list[i] == 0) {
                         ch++
-                        if (f == -1)
+                        if (f == -1) {
                             f = i
+                        } else {
+                            s = i
+                        }
                     }
                 } else return Pair(f, i - 1)
             }
+        if (ch >= 2) return Pair(f, s)
     } else {
             for (i in list.indices) {
                 if (list[i] <= number) {
