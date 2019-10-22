@@ -270,37 +270,41 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     }
     if (number == 0) {
         for (i in list.indices)
-            if (ch < 2) {
-                if (list[i] == 0) {
-                    ch++
-                    if (f == -1)
-                        f = i
-                }
-            } else return Pair(f, i - 1)
+            if (list[i] <= number) {
+                if (ch < 2) {
+                    if (list[i] == 0) {
+                        ch++
+                        if (f == -1)
+                            f = i
+                    }
+                } else return Pair(f, i - 1)
+            }
     } else {
             for (i in list.indices) {
-                if (list[i] == 0) {
-                    if (ost[0] > 0) {
-                        return Pair(nom[0], i)
+                if (list[i] <= number) {
+                    if (list[i] == 0) {
+                        if (ost[0] > 0) {
+                            return Pair(nom[0], i)
+                        } else {
+                            ost[number + 1]++
+                            nom[number + 1] = i
+                        }
+                    } else if (list[i] == number) {
+                        if (ost[number + 1] > 0) {
+                            return Pair(nom[number + 1], i)
+                        } else {
+                            ost[0]++
+                            nom[0] = i
+                        }
                     } else {
-                        ost[number + 1]++
-                        nom[number + 1] = i
+                        if (ost[number - (list[i] % number)] > 0)
+                            return Pair(nom[number - (list[i] % number)], i)
+                        else {
+                            ost[list[i] % number]++
+                            nom[list[i] % number] = i
+                        }
                     }
-                } else if(list[i] == number) {
-                    if (ost[number + 1] > 0) {
-                        return Pair(nom[number + 1], i)
-                    } else {
-                        ost[0]++
-                        nom[0] = i
-                    }
-                } else {
-                if (ost[number - (list[i] % number)] > 0)
-                    return Pair(nom[number - (list[i] % number)], i)
-                else {
-                    ost[list[i] % number]++
-                    nom[list[i] % number] = i
                 }
-            }
             }
     }
     return Pair(-1, -1)
