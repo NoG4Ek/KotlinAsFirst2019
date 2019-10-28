@@ -359,7 +359,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     for (i in 0 until treasures.size) {
         for (j in 0 until capacity) {
             if (i == 0) {
-                if (treasures[(treasures.keys).toList()[i]]!!.first < j) {
+                if (treasures[(treasures.keys).toList()[i]]!!.first <= j + 1) {
                     dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
                     arr[i][j] = Pair(
                         treasures[(treasures.keys).toList()[i]]!!.second,
@@ -368,12 +368,12 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     dob.clear()
                 }
             } else {
-                if (j == treasures[(treasures.keys).toList()[i]]!!.first) {
+                if (j + 1 == treasures[(treasures.keys).toList()[i]]!!.first) {
                     dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
                     arr[i][j] = Pair(treasures[(treasures.keys).toList()[i]]!!.second, dob)
                     dob.clear()
                 }
-                if (j > treasures[(treasures.keys).toList()[i]]!!.first) {
+                if (j + 1 > treasures[(treasures.keys).toList()[i]]!!.first) {
                     prev = arr[i - 1][j].first
                     curr = arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].first
                     if (prev >= curr + treasures[(treasures.keys).toList()[i]]!!.first) {
