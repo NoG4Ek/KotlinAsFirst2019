@@ -347,7 +347,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val arr = Array(treasures.size) { Array(capacity) { Pair(0, listOf<String>()) } }
+    val arr: Array<Array<Pair<Int,List<String>>>> = Array(treasures.size) { Array(capacity) { Pair(0, List<String>) } }
     //var arr = mutableMapOf<Int, MutableMap<Int, Pair<Int, MutableList<String>>>>()
     val dob = mutableListOf<String>()
     var prev: Int
@@ -360,12 +360,10 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         for (j in 0 until capacity) {
             if (i == 0) {
                 if (treasures[(treasures.keys).toList()[i]]!!.first <= j + 1) {
-                    dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
                     arr[i][j] = Pair(
                         treasures[(treasures.keys).toList()[i]]!!.second,
                         arr[i][j].second + (treasures.keys).toList()[i]
                     )
-                    dob.clear()
                 }
             } else {
                 if (j + 1 == treasures[(treasures.keys).toList()[i]]!!.first) {
@@ -381,7 +379,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     }
                     if (prev < curr + treasures[(treasures.keys).toList()[i]]!!.first) {
                         dob.add(arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].second.toString() + (treasures.keys).toList()[i])
-                        arr[i][j] = Pair(curr, dob)
+                        arr[i][j] = Pair(curr + treasures[(treasures.keys).toList()[i]]!!.first, dob)
                         dob.clear()
                     }
                 }
