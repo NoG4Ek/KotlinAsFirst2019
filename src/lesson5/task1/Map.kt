@@ -268,61 +268,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         else
             ost[list[i]] = i
     return Pair(-1, -1)
-   /* val ost = mutableListOf<Int>()
-    val nom = mutableListOf<Int>()
-    var ch = 0
-    var f = -1
-    var s = -1
-    if (list.isEmpty() || list.size == 1)
-        return Pair(-1, -1)
-    for (i in 0..number + 1) {
-        ost.add(i, 0)
-        nom.add(i, 0)
-    }
-    if (number == 0) {
-        for (i in list.indices)
-            if (list[i] <= number) {
-                if (ch < 2) {
-                    if (list[i] == 0) {
-                        ch++
-                        if (f == -1) {
-                            f = i
-                        } else {
-                            s = i
-                        }
-                    }
-                }
-            }
-        if (ch >= 2) return Pair(f, s)
-    } else {
-            for (i in list.indices) {
-                if (list[i] <= number) {
-                    if (list[i] == 0) {
-                        if (ost[0] > 0) {
-                            return Pair(nom[0], i)
-                        } else {
-                            ost[number + 1]++
-                            nom[number + 1] = i
-                        }
-                    } else if (list[i] == number) {
-                        if (ost[number + 1] > 0) {
-                            return Pair(nom[number + 1], i)
-                        } else {
-                            ost[0]++
-                            nom[0] = i
-                        }
-                    } else {
-                        if (ost[number - (list[i] % number)] > 0)
-                            return Pair(nom[number - (list[i] % number)], i)
-                        else {
-                            ost[list[i] % number]++
-                            nom[list[i] % number] = i
-                        }
-                    }
-                }
-            }
-    }
-    return Pair(-1, -1)*/
 }
 
 /**
@@ -347,8 +292,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val arr = Array(treasures.size) { Array(capacity) { Pair(0, List<String>) } }
-    //var arr = mutableMapOf<Int, MutableMap<Int, Pair<Int, MutableList<String>>>>()
+    val arr = Array(treasures.size) { Array(capacity) { Pair(0, listOf<String>()) } }
     val dob = mutableListOf<String>()
     var prev: Int
     var curr: Int
