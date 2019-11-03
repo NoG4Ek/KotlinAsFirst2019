@@ -2,11 +2,14 @@
 
 package lesson6.task1
 
+import java.lang.Math.floor
+import java.lang.Math.min
+
 /**
  * Пример
  *
  * Время представлено строкой вида "11:34:45", содержащей часы, минуты и секунды, разделённые двоеточием.
- * Разобрать эту строку и рассчитать количество секунд, прошедшее с начала дня.
+ * Разобрать эту строку и рассчитать количество секунд,фв прошедшее с начала дня.
  */
 fun timeStrToSeconds(str: String): Int {
     val parts = str.split(":")
@@ -170,7 +173,39 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+
+    var number = 0
+    val map = mapOf(
+        'I' to 1,
+        'V' to 5,
+        'X' to 10,
+        'L' to 50,
+        'C' to 100,
+        'D' to 500,
+        'M' to 1000
+        )
+    var i = 0
+    try {
+        loop@ while (i < roman.length) {
+            if (i != roman.length - 1) {
+                if (map[roman[i]]!! < map[roman[i + 1]]!!) {
+                    number += map[roman[i + 1]]!! - map[roman[i]]!!
+                    i += 2
+                    continue@loop
+                }
+                if (map[roman[i]]!! >= map[roman[i + 1]]!!) {
+                    number += map[roman[i]]!!
+                }
+            } else
+                number += map[roman[i]]!!
+            i++
+        }
+        return number
+    } catch (e: KotlinNullPointerException) {
+        return -1
+    }
+}
 
 /**
  * Очень сложная
@@ -208,4 +243,66 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    val list = mutableListOf<Int>()
+    var k = floor((cells / 2).toDouble()).toInt()
+    var i = 0
+    var l = 0
+    val first = mutableListOf<Int>()
+    var now = -1
+    var inch = 0
+    var cycle = false
+    var op = 0
+    var cl = 0
+    for (o in 0 until cells)
+        list.add(0)
+    for (o in commands.indices){
+        if (commands[o] == '[')
+            op++
+        if (commands[o] == ']')
+            cl++
+    }
+    require(op == cl)
+
+        loop@ while (i < commands.length && l < limit) {
+            if (!cycle) {
+                when (commands[i]) {
+                    '>' -> k++
+                    '<' -> k--
+                    '+' -> list[k]++
+                    '-' -> list[k]--
+                    '[' -> if (list[k] == 0) {
+                        cycle = true
+                    } else {
+                        first.add(i)
+                        now++
+                    }
+                    ']' -> if (list[k] == 0) {
+                        i++
+                        first.removeAt(now)
+                        now--
+                        continue@loop
+                    } else {
+                        i = first[now]
+                        first.removeAt(now)
+                        now--
+                        continue@loop
+                    }
+                    ' ' -> i = i
+                    else -> throw IllegalArgumentException()
+                }
+            } else {
+                if (commands[i] == '[')
+                    inch++
+                if (commands[i] == ']' && inch != 0)
+                    inch--
+                if (commands[i] == ']' && inch == 0)
+                    cycle = false
+                l++
+            }
+            check(k <= list.size - 1)
+            i++
+            l++
+        }
+        return list
+}
