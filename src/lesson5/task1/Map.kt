@@ -259,14 +259,13 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val ost= mutableMapOf<Int, Int>()
-    for (i in 0..number)
-        ost[i] = -1
     for (i in list.indices)
-        if (list[i] <= number)
-        if (ost[number - list[i]]!! > -1)
-            return ost[number - list[i]]!! to i
-        else
-            ost[list[i]] = i
+        if (list[i] <= number) {
+            if (ost[number - list[i]] != null)
+                return ost[number - list[i]]!! to i
+            else
+                ost[list[i]] = i
+        }
     return Pair(-1, -1)
 }
 
@@ -293,7 +292,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val arr = Array(treasures.size) { Array(capacity) { Pair(0, listOf<String>()) } }
-    val dob = mutableListOf<String>()
+    var dob: MutableList<String>
     var prev: Int
     var curr: Int
 
@@ -304,14 +303,16 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         for (j in 0 until capacity) {
             if (i == 0) {
                 if (treasures[(treasures.keys).toList()[i]]!!.first <= j + 1) {
+                    dob = (arr[i][j].second + (treasures.keys).toList()[i]).toMutableList()
                     arr[i][j] = Pair(
                         treasures[(treasures.keys).toList()[i]]!!.second,
-                        arr[i][j].second + (treasures.keys).toList()[i]
+                        dob.toList()
                     )
+                    dob.clear()
                 }
             } else {
                 if (j + 1 == treasures[(treasures.keys).toList()[i]]!!.first) {
-                    dob.add(arr[i][j].second.toString() + (treasures.keys).toList()[i])
+                    dob = (arr[i][j].second + (treasures.keys).toList()[i]).toMutableList()
                     arr[i][j] = Pair(treasures[(treasures.keys).toList()[i]]!!.second, dob.toList())
                     dob.clear()
                 }
@@ -322,7 +323,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                         arr[i][j] = Pair(prev, arr[i - 1][j].second)
                     }
                     if (prev < curr + treasures[(treasures.keys).toList()[i]]!!.first) {
-                        dob.add(arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].second.toString() + (treasures.keys).toList()[i])
+                        dob = (arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].second + (treasures.keys).toList()[i]).toMutableList()
                         arr[i][j] = Pair(curr + treasures[(treasures.keys).toList()[i]]!!.first,  dob.toList())
                         dob.clear()
                     }
