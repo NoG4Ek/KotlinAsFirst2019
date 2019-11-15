@@ -186,6 +186,8 @@ fun fromRoman(roman: String): Int {
         'M' to 1000
         )
     var i = 0
+    if (roman.isEmpty())
+        return -1
     try {
         loop@ while (i < roman.length) {
             if (i != roman.length - 1) {
@@ -262,13 +264,20 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         if (commands[o] == ']')
             cl++
     }
+    val size = list.size
     require(op == cl)
 
         loop@ while (i < commands.length && l < limit) {
             if (!cycle) {
                 when (commands[i]) {
-                    '>' -> k++
-                    '<' -> k--
+                    '>' -> {
+                        k++
+                        check(!(k > size - 1 || k < 0)) { "$k is out-of-bounds for [0,$size)" }
+                    }
+                    '<' -> {
+                        k--
+                        check(!(k > size - 1 || k < 0)) { "$k is out-of-bounds for [0,$size)" }
+                    }
                     '+' -> list[k]++
                     '-' -> list[k]--
                     '[' -> if (list[k] == 0) {
