@@ -77,7 +77,42 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    var fc = 0
+    var wordCopy = ""
+    val con = Regex(".*[жчшщ][ыяю].*", RegexOption.IGNORE_CASE)
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty()) {
+            outputStream.newLine()
+            continue
+        }
+        for (word in line.split(" ")) {
+            wordCopy = word
+            if(con.containsMatchIn(word))
+                for (i in 0..word.length - 2)
+                    if (word[i] == 'ж' || word[i] == 'ч' || word[i] == 'ш'|| word[i] == 'щ' ||
+                        word[i] == 'Ж' || word[i] == 'Ч' || word[i] == 'Ш'|| word[i] == 'Щ')
+                        when (word[i + 1]) {
+                            'ы' -> wordCopy = word.substring(0..i) + "и" + word.substring(i+2)
+                            'Ы' -> wordCopy = word.substring(0..i) + "И" + word.substring(i+2)
+                            'я' -> wordCopy = word.substring(0..i) + "а" + word.substring(i+2)
+                            'Я' -> wordCopy = word.substring(0..i) + "А" + word.substring(i+2)
+                            'ю' -> wordCopy = word.substring(0..i) + "у" + word.substring(i+2)
+                            'Ю' -> wordCopy = word.substring(0..i) + "У" + word.substring(i+2)
+                        }
+            if (fc == 0) {
+                outputStream.write(wordCopy)
+                fc++
+            }
+            else {
+                outputStream.write(" ")
+                outputStream.write(wordCopy)
+            }
+        }
+        fc = 0
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -265,7 +300,96 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    var inc = mutableListOf("1")
+    var wordCopy: String
+    var fc = 0
+    var i = 0
+    var len = 0
+    var close = false
+    outputStream.write("<html><body><p>")
+    for (line in File(inputName).readLines()) {
+        len += line.length
+        if (close) {
+            outputStream.write("<p>")
+            close = false
+        }
+        if (line.isEmpty()) {
+            outputStream.newLine()
+            continue
+        }
+        for (word in line.split(" ")) {
+                wordCopy = word
+                loop@ while (i < wordCopy.length - 1) {
+                        if (wordCopy[i] == '*') {
+                            if (wordCopy[i + 1] == '*') {
+                                if (inc.last()!! == "**") {
+                                    wordCopy =
+                                        wordCopy.substring(0..i-1) + "</b>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
+                                    inc.remove(inc.last())
+                                    i = 0
+                                    continue@loop
+                                } else {
+                                    wordCopy = wordCopy.substring(0..i-1) + "<b>" + wordCopy.substring(i + 2)
+                                    inc.add("**")
+                                    i = 0
+                                    continue@loop
+                                }
+                            } else {
+                                if (inc.last()!! == "*") {
+                                    wordCopy = wordCopy.substring(0..i-1) + "</i>" + wordCopy.substring(i + 1)
+                                    inc.remove(inc.last())
+                                    i = 0
+                                    continue@loop
+                                } else {
+                                    wordCopy = wordCopy.substring(0..i-1) + "<i>" + wordCopy.substring(i + 1)
+                                    inc.add("*")
+                                    i = 0
+                                    continue@loop
+                                }
+                            }
+                        }
+                        if (wordCopy[i] == '~'){
+                            if (wordCopy[i + 1] == '~') {
+                                if (inc.last() == "~~") {
+                                    wordCopy =
+                                        wordCopy.substring(0..i-1) + "</s>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
+                                    inc.remove(inc.last())
+                                    i = 0
+                                    continue@loop
+                                } else {
+                                    wordCopy =
+                                        wordCopy.substring(0..i-1) + "<s>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
+                                    inc.add("~~")
+                                    i = 0
+                                    continue@loop
+                                }
+                            }
+                        }
+                    i++
+                }
+                i = 0
+
+                if (fc == 0) {
+                    outputStream.write(wordCopy)
+                    fc++
+                }
+                else {
+                    outputStream.write(" ")
+                    outputStream.write(wordCopy)
+                }
+        }
+        if (File(inputName).readText().length - len > 8)
+        if (File(inputName).readText()[len + 2].toString() + File(inputName).readText()[len + 3].toString() +
+            File(inputName).readText()[len + 4].toString() + File(inputName).readText()[len + 5].toString()  == "\r\n\r\n") {
+            outputStream.write("</p>")
+            close = true
+        }
+        fc = 0
+        outputStream.newLine()
+    }
+    outputStream.write("</p></body></html>")
+    outputStream.close()
 }
 
 /**
