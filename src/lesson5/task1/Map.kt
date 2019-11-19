@@ -301,7 +301,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
 
     for (i in 0 until treasures.size) {
         for (j in 0 until capacity) {
-            if (i == 0) {
+            if (i == 0) { // Заполнение первой строчки
                 if (treasures[(treasures.keys).toList()[i]]!!.first <= j + 1) {
                     dob = (arr[i][j].second + (treasures.keys).toList()[i]).toMutableList()
                     arr[i][j] = Pair(
@@ -311,7 +311,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     dob.clear()
                 }
             } else {
-                if (j + 1 == treasures[(treasures.keys).toList()[i]]!!.first) {
+                if (j + 1 == treasures[(treasures.keys).toList()[i]]!!.first) { // Если масса текущего сокровища равна массе в таблице, то приравнять максимум по стоимости от пред значения и верхнего
                     if (arr[i - 1][j].first >= treasures[(treasures.keys).toList()[i]]!!.second){
                         dob = (arr[i - 1][j].second).toMutableList()
                         arr[i][j] = Pair(arr[i - 1][j].first, dob.toList())
@@ -322,7 +322,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                         dob.clear()
                     }
                 }
-                if (j + 1 > treasures[(treasures.keys).toList()[i]]!!.first) {
+                if (j + 1 > treasures[(treasures.keys).toList()[i]]!!.first) { // Если масса текущего сокровища меньше массы таблицы, то приравнять максимум по тсоимости от текущего сокровища и суммы его с помещ сокровищем
                     if (arr[i - 1][j].first >= treasures[(treasures.keys).toList()[i]]!!.second) {
                         prev = arr[i - 1][j].first
                         dob = (arr[i - 1][j].second).toMutableList()
@@ -332,10 +332,8 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     }
                     curr = arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].first
                     if (prev >= curr + treasures[(treasures.keys).toList()[i]]!!.second) {
-                        if (arr[i - 1][j].first >= treasures[(treasures.keys).toList()[i]]!!.second){
-                            arr[i][j] = Pair(prev, dob)
+                            arr[i][j] = Pair(prev, dob.toList())
                             dob.clear()
-                        }
                     }
                     if (prev < curr + treasures[(treasures.keys).toList()[i]]!!.second) {
                         dob = (arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].second + (treasures.keys).toList()[i]).toMutableList()
@@ -343,7 +341,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                         dob.clear()
                     }
                 }
-                if (j + 1 < treasures[(treasures.keys).toList()[i]]!!.first){
+                if (j + 1 < treasures[(treasures.keys).toList()[i]]!!.first){ // Если масса текущего сокроввища больше массы таблицы, то приравнять то, что стоит выше
                     dob = (arr[i - 1][j].second).toMutableList()
                     arr[i][j] = Pair(arr[i - 1][j].first, dob.toList())
                     dob.clear()
