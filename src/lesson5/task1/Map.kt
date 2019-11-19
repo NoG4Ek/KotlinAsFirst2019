@@ -323,10 +323,19 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     }
                 }
                 if (j + 1 > treasures[(treasures.keys).toList()[i]]!!.first) {
-                    prev = arr[i - 1][j].first
+                    if (arr[i - 1][j].first >= treasures[(treasures.keys).toList()[i]]!!.second) {
+                        prev = arr[i - 1][j].first
+                        dob = (arr[i - 1][j].second).toMutableList()
+                    } else {
+                        prev = arr[i][j - 1].first
+                        dob = (arr[i][j - 1].second).toMutableList()
+                    }
                     curr = arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].first
                     if (prev >= curr + treasures[(treasures.keys).toList()[i]]!!.second) {
-                        arr[i][j] = Pair(prev, arr[i - 1][j].second)
+                        if (arr[i - 1][j].first >= treasures[(treasures.keys).toList()[i]]!!.second){
+                            arr[i][j] = Pair(prev, dob)
+                            dob.clear()
+                        }
                     }
                     if (prev < curr + treasures[(treasures.keys).toList()[i]]!!.second) {
                         dob = (arr[i - 1][j - treasures[(treasures.keys).toList()[i]]!!.first].second + (treasures.keys).toList()[i]).toMutableList()
@@ -334,6 +343,12 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                         dob.clear()
                     }
                 }
+                if (j + 1 < treasures[(treasures.keys).toList()[i]]!!.first){
+                    dob = (arr[i - 1][j].second).toMutableList()
+                    arr[i][j] = Pair(arr[i - 1][j].first, dob.toList())
+                    dob.clear()
+                }
+
             }
         }
     }
