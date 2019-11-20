@@ -254,18 +254,18 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var now = -1
     var inch = 0
     var cycle = false
-    var op = 0
-    var cl = 0
+    var br = 0
     for (o in 0 until cells)
         list.add(0)
     for (o in commands.indices){
         if (commands[o] == '[')
-            op++
+            br++
         if (commands[o] == ']')
-            cl++
+            br--
+        require(br >= 0)
     }
     val size = list.size
-    require(op == cl)
+    require(br == 0)
 
         loop@ while (i < commands.length && l < limit) {
             if (!cycle) {
