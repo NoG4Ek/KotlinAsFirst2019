@@ -281,12 +281,15 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                     '+' -> list[k]++
                     '-' -> list[k]--
                     '[' -> if (list[k] == 0) {
+                        i++
                         cycle = true
+                        continue@loop
                     } else {
                         first.add(i)
                         now++
                     }
                     ']' -> if (list[k] == 0) {
+                        l++
                         i++
                         first.removeAt(now)
                         now--
@@ -304,24 +307,24 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                 if (commands[i] == '[') {
                     inch++
                     i++
-                    l++
                     continue@loop
                 }
                 if (commands[i] == ']' && inch != 0) {
                     inch--
                     i++
-                    l++
                     continue@loop
                 }
                 if (commands[i] == ']' && inch == 0) {
                     cycle = false
+                    if (list[k] == 0)
+                        l++
                     i++
-                    l++
                     continue@loop
                 }
             }
             check(k <= list.size - 1)
             i++
+            if (!cycle)
             l++
         }
         return list

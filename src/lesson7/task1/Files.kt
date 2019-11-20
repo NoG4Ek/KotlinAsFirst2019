@@ -93,12 +93,12 @@ fun sibilants(inputName: String, outputName: String) {
                     if (word[i] == 'ж' || word[i] == 'ч' || word[i] == 'ш'|| word[i] == 'щ' ||
                         word[i] == 'Ж' || word[i] == 'Ч' || word[i] == 'Ш'|| word[i] == 'Щ')
                         when (word[i + 1]) {
-                            'ы' -> wordCopy = word.substring(0..i) + "и" + word.substring(i+2)
-                            'Ы' -> wordCopy = word.substring(0..i) + "И" + word.substring(i+2)
-                            'я' -> wordCopy = word.substring(0..i) + "а" + word.substring(i+2)
-                            'Я' -> wordCopy = word.substring(0..i) + "А" + word.substring(i+2)
-                            'ю' -> wordCopy = word.substring(0..i) + "у" + word.substring(i+2)
-                            'Ю' -> wordCopy = word.substring(0..i) + "У" + word.substring(i+2)
+                            'ы' -> wordCopy = wordCopy.substring(0..i) + "и" + wordCopy.substring(i+2)
+                            'Ы' -> wordCopy = wordCopy.substring(0..i) + "И" + wordCopy.substring(i+2)
+                            'я' -> wordCopy = wordCopy.substring(0..i) + "а" + wordCopy.substring(i+2)
+                            'Я' -> wordCopy = wordCopy.substring(0..i) + "А" + wordCopy.substring(i+2)
+                            'ю' -> wordCopy = wordCopy.substring(0..i) + "у" + wordCopy.substring(i+2)
+                            'Ю' -> wordCopy = wordCopy.substring(0..i) + "У" + wordCopy.substring(i+2)
                         }
             if (fc == 0) {
                 outputStream.write(wordCopy)
