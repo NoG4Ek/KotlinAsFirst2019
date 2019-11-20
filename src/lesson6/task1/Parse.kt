@@ -301,13 +301,24 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                     else -> throw IllegalArgumentException()
                 }
             } else {
-                if (commands[i] == '[')
+                if (commands[i] == '[') {
                     inch++
-                if (commands[i] == ']' && inch != 0)
+                    i++
+                    l++
+                    continue@loop
+                }
+                if (commands[i] == ']' && inch != 0) {
                     inch--
-                if (commands[i] == ']' && inch == 0)
+                    i++
+                    l++
+                    continue@loop
+                }
+                if (commands[i] == ']' && inch == 0) {
                     cycle = false
-                l++
+                    i++
+                    l++
+                    continue@loop
+                }
             }
             check(k <= list.size - 1)
             i++
