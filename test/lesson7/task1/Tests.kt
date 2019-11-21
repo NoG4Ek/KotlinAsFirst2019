@@ -221,17 +221,7 @@ Basic, Ruby, Swift.
         val result = File("temp.html").readText().replace(Regex("[\\s\\n\\t]"), "")
         val expected =
             """
-                    <html>
-                        <body>
-                            <p>
-                                Lorem ipsum <i>dolor sit amet</i>, consectetur <b>adipiscing</b> elit.
-                                Vestibulum lobortis. <s>Est vehicula rutrum <i>suscipit</i></s>, ipsum <s>lib</s>ero <i>placerat <b>tortor</b></i>.
-                            </p>
-                            <p>
-                                Suspendisse <s>et elit in enim tempus iaculis</s>.
-                            </p>
-                        </body>
-                    </html>
+                    <html><body><p><i>Rgm<s>x;3</s>{u<b>7lD2<s>{exoU</s>W</b>:=|<b>B=<s>Zor</s>UE%.W8c`aQL{MI<s>04`ElUxv(</s>pM<s>o8FF</s>?<s>:bbfLe</s>9</b>Pn)NIz4</i>Ox&f)<b><i>q<s>\\9</s>F4&^<s>DqL8</s>[Ve;zf;l^\\]DNw\"S`|o<s></s>2l</i>^_{E;\"<s>%Ga<i>K:08$ C9</i>k/k</s>BC<i>sL</i>n/X</b>X7<s>hRAYl#LH</s>%<b>?,Tn6c<i>LoSFx;G</i>IL{0{c7<s>Pid3</s>?h;\"4lrM-U4P8RE</b>q\\^|QCxH/.%k8&;<s>];:UrS4=J@R<i>iV</i>VZiksn(y</s>$ IG<i>O</i>`H(HkEaR?)Uo=GxP2&<s><b>/v;^/E[|B=Jbs</b>f_Q2<i>h}&[</i></s>#cWg4;LXWe/I<s>L-D=<i></i>%DJo-u19</s>N<i>xgFLzvuX0ZR_Uv</i>D1.KEoO0p=KeFURRsU-m-GlsXJA<i>hz/g36ty(,?E<b>f</b>9</i>6:<i>klq\\-uO2mlIC:</i>i+<i>LHF{B:Fnz</i>6<s>?F=qo?]BAyA}G.-3&ene0VHUO#17Z3</s>}\"B.,mwm<b></b>Lyg;SnU=\\a<i>Z<s>:}<b>v</b>lV|^(P</s>9<b></b>_@LP^H2J0`E\\D@lL</i>omyW<i>Y^VSSlCtp</i>'nLXp%\"6yuPN+<s>CMpltjx$ WAmG}_cG-/!5VEw9L2&/v|Ko</s>Io`3w'G6eQk<b>E#%T,bNnb=?nwBnvbYcu^C;S</b>brfA3w<b>LKN#;=$ P)'5tw\\R72vnin|zRbS<i>Z{NW`B#;#[{;g</i></b>_$ ZQ#h=5Noi?xYa[J-ehZ'(rmoCdEI<s></s>a_HF+e6BuUlbugZ[^7=tf`GENzZVDcr)RL)<s>?OvFG\"@</s><i>_</i>]xFC|</p><p>j]k\"d&<b><s>wX<i>a</i>_</s>t<s>%%k<i>\\</i>_ty</s>!M|k<s>[<i>}</i>je</s>j<s></s>r<i>9S</i><s>a}zh<i>^a</i>!-W</s>2CZ6d<i>U'`2W</i>e+#ZV8<i>p<s>C,</s>ow0C%</i>kVv?<s></s></b>ai</p></body></html>
                     """.trimIndent().replace(Regex("[\\s\\n\\t]"), "")
         assertEquals(expected, result)
 

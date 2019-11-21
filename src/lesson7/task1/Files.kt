@@ -320,9 +320,9 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         }
         for (word in line.split(" ")) {
                 wordCopy = word
-                loop@ while (i < wordCopy.length - 1) {
+                loop@ while (i <= wordCopy.length - 1) {
                         if (wordCopy[i] == '*') {
-                            if (wordCopy[i + 1] == '*') {
+                            if (i != wordCopy.length - 1 && wordCopy[i + 1] == '*') {
                                 if (inc.last()!! == "**") {
                                     wordCopy =
                                         wordCopy.substring(0..i-1) + "</b>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
@@ -350,7 +350,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                             }
                         }
                         if (wordCopy[i] == '~'){
-                            if (wordCopy[i + 1] == '~') {
+                            if (i != wordCopy.length - 1 && wordCopy[i + 1] == '~') {
                                 if (inc.last() == "~~") {
                                     wordCopy =
                                         wordCopy.substring(0..i-1) + "</s>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
@@ -381,7 +381,8 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         }
         if (File(inputName).readText().length - len > 8)
         if (File(inputName).readText()[len + 2].toString() + File(inputName).readText()[len + 3].toString() +
-            File(inputName).readText()[len + 4].toString() + File(inputName).readText()[len + 5].toString()  == "\r\n\r\n") {
+            File(inputName).readText()[len + 4].toString() + File(inputName).readText()[len + 5].toString()  == "\r\n\r\n" ||
+            File(inputName).readText()[len + 3].toString() + File(inputName).readText()[len + 5].toString() == "\n\n") {
             outputStream.write("</p>")
             close = true
         }
