@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.Math.pow
 
 /**
  * Пример
@@ -534,7 +535,40 @@ fun markdownToHtml(inputName: String, outputName: String) {
  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val ops = File(outputName).bufferedWriter()
+    val delta = (lhv * (rhv / pow(10.0, (rhv.toString().length - 1).toDouble())).toInt()).toString().length - lhv.toString().length
+    var part: Int
+
+    for (i in 1..rhv.toString().length + delta)
+        ops.write(" ")
+    ops.write("$lhv\n*")
+    for (i in 1 until lhv.toString().length + delta)
+        ops.write(" ")
+    ops.write("$rhv\n")
+    for (i in 1..lhv.toString().length + rhv.toString().length + delta)
+        ops.write("-")
+    ops.newLine()
+    for (i in rhv.toString().indices) {
+        if (i != 0) {
+            ops.write("+")
+            for (j in 1 until rhv.toString().length + delta - i)
+                ops.write(" ")
+        } else {
+            for (j in 1..rhv.toString().length + delta)
+                ops.write(" ")
+        }
+        part = lhv * rhv.toString()[rhv.toString().length - i - 1].toString().toInt()
+        ops.write("$part")
+        ops.newLine()
+    }
+    for (i in 1..lhv.toString().length + rhv.toString().length + delta)
+        ops.write("-")
+    ops.newLine()
+    part = rhv * lhv
+    for (i in 1..1 - (part.toString().length - (lhv.toString().length + rhv.toString().length - 1)))
+        ops.write(" ")
+    ops.write("$part")
+    ops.close()
 }
 
 
@@ -559,6 +593,64 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val ops = File(outputName).bufferedWriter()
+    val o = lhv / rhv
+    var first = rhv * o.toString()[0].toString().toInt()
+    var fch = 0
+    var next: Int
+    var prob: Int
+    var new: Int
+    var nextL: Int // Чтобы запомнить откуда опускать цифры
+
+    ops.write(" $lhv | $rhv\n-$first")
+    for (i in 1..lhv.toString().length - first.toString().length + 3)
+        ops.write(" ")
+    ops.write("$o\n")
+    for (i in 1..first.toString().length + 1)
+        ops.write("-")
+    ops.newLine()
+    // Ищем разницу
+    for (i in first.toString().indices)
+        fch += lhv.toString()[i].toString().toInt() * pow(10.0, (first.toString().length - i - 1).toDouble()).toInt()
+    fch -= first
+
+    for (j in 0..first.toString().length - fch.toString().length)
+        ops.write(" ")
+    ops.write("$fch")
+
+    if (lhv / rhv > 0) {
+        prob = first.toString().length
+        nextL = first.toString().length
+
+        next = lhv.toString()[nextL].toString().toInt()
+        ops.write("$next\n")
+
+        new = (fch.toString() + next.toString()).toInt()
+
+        for (i in 0..o.toString().length - 2) {
+            if (i != 0) {
+                next = lhv.toString()[nextL].toString().toInt()
+                ops.write("$next\n")
+                new = (fch.toString() + next.toString()).toInt()
+            }
+            first = rhv * o.toString()[i + 1].toString().toInt()
+
+            for (j in 0..prob - first.toString().length)
+                ops.write(" ")
+            ops.write("-$first\n")
+            for (j in 0..prob - first.toString().length)
+                ops.write(" ")
+            for (j in 0..first.toString().length)
+                ops.write("-")
+            ops.newLine()
+            prob += 1
+            fch = new - first
+            for (j in 0..prob - fch.toString().length)
+                ops.write(" ")
+            ops.write("$fch")
+            nextL += 1
+        }
+    }
+    ops.close()
 }
 
