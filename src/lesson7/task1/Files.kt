@@ -307,13 +307,17 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var wordCopy: String
     var fc = 0
     var i = 0
+    var one = false
     outputStream.write("<html><body><p>")
     for (line in File(inputName).readLines()) {
         if (line.isEmpty()) {
-            outputStream.write("</p><p>")
+            if(!one)
+                outputStream.write("</p><p>")
+            one = true
             continue
         }
         for (word in line.split(" ")) {
+            one = false
                 wordCopy = word
                 loop@ while (i <= wordCopy.length - 1) {
                         if (wordCopy[i] == '*') {
@@ -523,41 +527,34 @@ fun markdownToHtml(inputName: String, outputName: String) {
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
     val ops = File(outputName).bufferedWriter()
-    var delta = (lhv * (rhv / pow(10.0, (rhv.toString().length - 1).toDouble())).toInt()).toString().length - lhv.toString().length
     var part: Int
+    val o = lhv * rhv
 
-    for (i in 1..rhv.toString().length + delta)
+    for (i in 0..o.toString().length - lhv.toString().length)
         ops.write(" ")
     ops.write("$lhv\n*")
-    for (i in 1 until lhv.toString().length + delta)
+    for (i in 1..o.toString().length - rhv.toString().length)
         ops.write(" ")
     ops.write("$rhv\n")
-    for (i in 1..lhv.toString().length + rhv.toString().length + delta)
+    for (i in 0..o.toString().length)
         ops.write("-")
     ops.newLine()
     for (i in rhv.toString().indices) {
-        //delta = (lhv * (rhv / pow(10.0, (rhv.toString().length - 1).toDouble())).toInt()).toString().length - lhv.toString().length
+        part = lhv * rhv.toString()[rhv.toString().length - i - 1].toString().toInt()
         if (i != 0) {
             ops.write("+")
-            for (j in 1 until rhv.toString().length + delta - i -
-            abs(lhv.toString().length - (lhv * (rhv.toString()[rhv.toString().length - i - 1]).toString().toInt()).toString().length))
+            for (j in 1..o.toString().length - part.toString().length - i)
                 ops.write(" ")
         } else {
-            for (j in 1..rhv.toString().length + delta -
-            abs(lhv.toString().length - (lhv * (rhv.toString()[rhv.toString().length - i - 1]).toString().toInt()).toString().length))
+            for (j in 0..o.toString().length - part.toString().length)
                 ops.write(" ")
         }
-        part = lhv * rhv.toString()[rhv.toString().length - i - 1].toString().toInt()
         ops.write("$part")
         ops.newLine()
     }
-    for (i in 1..lhv.toString().length + rhv.toString().length + delta)
+    for (i in 0..o.toString().length)
         ops.write("-")
-    ops.newLine()
-    part = rhv * lhv
-    for (i in 1..1 - ((part.toString().length - (lhv.toString().length + rhv.toString().length - 1)) - delta))
-        ops.write(" ")
-    ops.write("$part")
+    ops.write("\n $o")
     ops.close()
 }
 
