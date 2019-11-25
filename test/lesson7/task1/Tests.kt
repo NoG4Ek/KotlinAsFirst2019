@@ -221,8 +221,8 @@ Basic, Ruby, Swift.
         val result = File("temp.html").readText().replace(Regex("[\\s\\n\\t]"), "")
         val expected =
             """
-                    <html><body><p><i>Rgm<s>x;3</s>{u<b>7lD2<s>{exoU</s>W</b>:=|<b>B=<s>Zor</s>UE%.W8c`aQL{MI<s>04`ElUxv(</s>pM<s>o8FF</s>?<s>:bbfLe</s>9</b>Pn)NIz4</i>Ox&f)<b><i>q<s>\\9</s>F4&^<s>DqL8</s>[Ve;zf;l^\\]DNw\"S`|o<s></s>2l</i>^_{E;\"<s>%Ga<i>K:08$ C9</i>k/k</s>BC<i>sL</i>n/X</b>X7<s>hRAYl#LH</s>%<b>?,Tn6c<i>LoSFx;G</i>IL{0{c7<s>Pid3</s>?h;\"4lrM-U4P8RE</b>q\\^|QCxH/.%k8&;<s>];:UrS4=J@R<i>iV</i>VZiksn(y</s>$ IG<i>O</i>`H(HkEaR?)Uo=GxP2&<s><b>/v;^/E[|B=Jbs</b>f_Q2<i>h}&[</i></s>#cWg4;LXWe/I<s>L-D=<i></i>%DJo-u19</s>N<i>xgFLzvuX0ZR_Uv</i>D1.KEoO0p=KeFURRsU-m-GlsXJA<i>hz/g36ty(,?E<b>f</b>9</i>6:<i>klq\\-uO2mlIC:</i>i+<i>LHF{B:Fnz</i>6<s>?F=qo?]BAyA}G.-3&ene0VHUO#17Z3</s>}\"B.,mwm<b></b>Lyg;SnU=\\a<i>Z<s>:}<b>v</b>lV|^(P</s>9<b></b>_@LP^H2J0`E\\D@lL</i>omyW<i>Y^VSSlCtp</i>'nLXp%\"6yuPN+<s>CMpltjx$ WAmG}_cG-/!5VEw9L2&/v|Ko</s>Io`3w'G6eQk<b>E#%T,bNnb=?nwBnvbYcu^C;S</b>brfA3w<b>LKN#;=$ P)'5tw\\R72vnin|zRbS<i>Z{NW`B#;#[{;g</i></b>_$ ZQ#h=5Noi?xYa[J-ehZ'(rmoCdEI<s></s>a_HF+e6BuUlbugZ[^7=tf`GENzZVDcr)RL)<s>?OvFG\"@</s><i>_</i>]xFC|</p><p>j]k\"d&<b><s>wX<i>a</i>_</s>t<s>%%k<i>\\</i>_ty</s>!M|k<s>[<i>}</i>je</s>j<s></s>r<i>9S</i><s>a}zh<i>^a</i>!-W</s>2CZ6d<i>U'`2W</i>e+#ZV8<i>p<s>C,</s>ow0C%</i>kVv?<s></s></b>ai</p></body></html>
-                    """.trimIndent().replace(Regex("[\\s\\n\\t]"), "")
+<html><body><p>MN|rYo<i>:Z,e)</i>ay#3T`mQZ9<b>hgyNpf<s>U\"q]=Kw;</s>9\\9<s>S\\m</s>,nj</b>)<i>/.Mn:7oc3-<b>o)X</b>9hCvOzWIdt1</i>+}iF9{%2<i></i>efU7E%fWa-B$ KZ<b>;<i>usQZ'</i></b>QgfU]-}.Cj<s>;\\7H<i>gSwmy+iH6GI^Pa</i>7A<b>qU/<i>Y(lB\\-@2</i>(n`O<i>b!'BMp2B_]bgd5T%</i>,<i></i>\"O?Km`<i></i>%XkXnbdK3Yf</b>77OVBIiUXwl5_=YKG6<b>nu<i>4-\\w}5C</i><i>B#</i>nABF</b>@<i>zg3Ql9=X</i>O36//<b>u1A\\t+@`f=or</b>X<b>|5fen%23SzLn,;a<i>0e7uDdcM3h</i>jj<i>;qn0$|</i>33[&Lam</b>Z5-733A]U<b>`|</b>};9};</s>iq!vX|4</p><p>M45/H_<i>La4\\;&</i>[M&u|?e#o]$[omO[|_uiAD013qFrg,]b2)cW=:uprB/58[T<i>Tspuak<b>N[p|gmoU4?BHc;|6Z|hnSO</b>8qYa6</i>R0t3Lh[;}WtyT<b>R</b>uL/R{aHW@&1<b>@=|Gv4(\"K54<s></s>p</b>0;VF#@}'A\\|H:9]BAk)]ES#KBndhkT<i></i>e<b>.$ YdRIq}5IqQI</b>f'?L<b>feSSZ!kFU<s>CV</s>F</b>8&<s>l+$ TC'S!HJLa'we<b>T<i>f</i>:s\"P|zkdKc]HU!L9{Ix&1A3z-x</b>=s+\\[jpHMv:J&zQmI'pKm9KVQH<b>cEnrPE$/<i>Y^</i>LZ/&+Gc</b>HzCYabm;<b>FDC#1</b>R</s>6'jKW5<s>b|W</s>Z-`4KCn{GsBtx}G@<b>hxDgF</b><s>-p^&Ad<b>wB?T4'_m2f}zY)WPy`@8\"s8s\"</b>V%6<b>51</b>-v;</s>vLZ\"Y]Cu;k&l<b>_0+NpuMFnhnRc+|FZ?g\"%Rmgy2I{&@F}9Z!KASm@L?J</b>(hAp^7<b>[C<s><i>n'C#q9do-a</i>wvX<i>6j}+z]K%</i>9</s>dI</b>H;<b>W[zp,[</b>T$<s>EvtQzms</s>_\\E<b>/<s>%{o^k[7\\q</s>kTH</b>@^^}1}_AI<s>`@b)</s>l<i>--c8bu-Rq<s></s><b>8u/</b>R7L-E.<b>bRKRH<s>V){y</s>A</b>58oAA</i><s>Y#</s>d<b></b>ZB<s></s>I(<i>CKI<b>Roq<s>DG,A{</s>Vhk5,</b>9jV)|3</i>a<s></s>!w#HCgKwQV\"<s>oYS(F0<b></b>=Uf\\f{`w<b>^!Ydh?<i>$ t</i>WKlLBz9W</b>2Ry<b>i</b>@l]6:x\\yPB<i>L}G9K<b>XApx=</b>?r</i>/</s>I=a<s>lU<i></i>S4<b>xJ</b>`.H3u{c[n<b>z</b>N^</s>11xp3jT1<s>/fc<b>&</b>?K4</s>.wSph\"(]%Bd<b>?=.D<i><s>y%Z</s>N</i></b>R<s>qv2WS.&C4f9qs(</s>Mo<i>Xy</i><s>`I<b><i>jz\"=-B</i>\\xq!hx<i>:</i>SA<i>VyUC</i>Jc#`_\\<i>[v#;d%{</i>^9k</b><b>Z\\&?<i>;</i>M<i>7k</i>}n</b>2]6\\5</s>UNp<s>;0</s>d{C<s>K</s>bq6?0MQv(<i>N?,i;Bl<b>\"L9.@\"`Y<s>?y(R8\"</s>aInmB</b>M[)</i>Q<s><i>z<b>MFQ;AAm6_/6</b>!,<b>_</b><b></b>QV</i>p,u2Z</s><b>!n</b>8A<i><b>fJIPL</b>Kr&<s>u1}?</s>}7<b>8sC</b>]'OyoREF<s></s>.i<s></s>G8,k{:q@;/</i>`<i></i>m<b>`e{<s>W6</s></b>(N:</p><p>3B8&@,KceG6<b>/U/</b>Tf;m<i>hpD<b>@@</b>N=+9=IK[<s></s>t</i>8sW;_<b>2e<s>EYIt</s>{.Pj</b>X'v<s>f$)8ak.cqz]t<i>`ZZ)</i><b>hC</b><i>IdCnM</i>%<b>)</b>1;Q)G<i>dS3</i>ScME</s>H;<i>x<b>yF#)BN</b>CUcvDEX<s>$^q$</s>]#&0?Y8K^6<b>u<s>`PDD</s>vfd</b>#`|4+</i>d,U/Q0<s></s>'%IA<i>Y`0<s>1}D$\"B<b>{6QO</b>Li</s></i>q#j<s>US<i>ni:</i>kO;</s>ii[l_i45@Z\"FlFbWKDLJ<i>=<s>Y</s>iq</i>JdXZT</p></body></html>
+""".trimIndent().replace(Regex("[\\s\\n\\t]"), "")
         assertEquals(expected, result)
 
         File("temp.html").delete()
@@ -314,17 +314,18 @@ Basic, Ruby, Swift.
         }
 
         test(
-            19935,
-            111,
+            2,
+            6464,
             """
-                19935
-             *    111
-             --------
-                19935
-             + 19935
-             +19935
-             --------
-              2212785
+                     2
+                * 6464
+                ------
+                     8
+                +  12
+                +  8
+                +12
+                ------
+                 12928
              """
         )
 

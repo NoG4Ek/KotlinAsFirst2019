@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.Math.abs
 import java.lang.Math.pow
 
 /**
@@ -302,21 +303,14 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
-    var inc = mutableListOf("1")
+    val inc = mutableListOf("1")
     var wordCopy: String
     var fc = 0
     var i = 0
-    var len = 0
-    var close = false
     outputStream.write("<html><body><p>")
     for (line in File(inputName).readLines()) {
-        len += line.length
-        if (close) {
-            outputStream.write("<p>")
-            close = false
-        }
         if (line.isEmpty()) {
-            outputStream.newLine()
+            outputStream.write("</p><p>")
             continue
         }
         for (word in line.split(" ")) {
@@ -324,7 +318,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                 loop@ while (i <= wordCopy.length - 1) {
                         if (wordCopy[i] == '*') {
                             if (i != wordCopy.length - 1 && wordCopy[i + 1] == '*') {
-                                if (inc.last()!! == "**") {
+                                if (inc.last() == "**") {
                                     wordCopy =
                                         wordCopy.substring(0..i-1) + "</b>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
                                     inc.remove(inc.last())
@@ -337,7 +331,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                                     continue@loop
                                 }
                             } else {
-                                if (inc.last()!! == "*") {
+                                if (inc.last() == "*") {
                                     wordCopy = wordCopy.substring(0..i-1) + "</i>" + wordCopy.substring(i + 1)
                                     inc.remove(inc.last())
                                     i = 0
@@ -379,13 +373,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                     outputStream.write(" ")
                     outputStream.write(wordCopy)
                 }
-        }
-        if (File(inputName).readText().length - len > 8)
-        if (File(inputName).readText()[len + 2].toString() + File(inputName).readText()[len + 3].toString() +
-            File(inputName).readText()[len + 4].toString() + File(inputName).readText()[len + 5].toString()  == "\r\n\r\n" ||
-            File(inputName).readText()[len + 3].toString() + File(inputName).readText()[len + 5].toString() == "\n\n") {
-            outputStream.write("</p>")
-            close = true
         }
         fc = 0
         outputStream.newLine()
@@ -536,7 +523,7 @@ fun markdownToHtml(inputName: String, outputName: String) {
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
     val ops = File(outputName).bufferedWriter()
-    val delta = (lhv * (rhv / pow(10.0, (rhv.toString().length - 1).toDouble())).toInt()).toString().length - lhv.toString().length
+    var delta = (lhv * (rhv / pow(10.0, (rhv.toString().length - 1).toDouble())).toInt()).toString().length - lhv.toString().length
     var part: Int
 
     for (i in 1..rhv.toString().length + delta)
@@ -549,12 +536,15 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
         ops.write("-")
     ops.newLine()
     for (i in rhv.toString().indices) {
+        //delta = (lhv * (rhv / pow(10.0, (rhv.toString().length - 1).toDouble())).toInt()).toString().length - lhv.toString().length
         if (i != 0) {
             ops.write("+")
-            for (j in 1 until rhv.toString().length + delta - i)
+            for (j in 1 until rhv.toString().length + delta - i -
+            abs(lhv.toString().length - (lhv * (rhv.toString()[rhv.toString().length - i - 1]).toString().toInt()).toString().length))
                 ops.write(" ")
         } else {
-            for (j in 1..rhv.toString().length + delta)
+            for (j in 1..rhv.toString().length + delta -
+            abs(lhv.toString().length - (lhv * (rhv.toString()[rhv.toString().length - i - 1]).toString().toInt()).toString().length))
                 ops.write(" ")
         }
         part = lhv * rhv.toString()[rhv.toString().length - i - 1].toString().toInt()
@@ -565,7 +555,7 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
         ops.write("-")
     ops.newLine()
     part = rhv * lhv
-    for (i in 1..1 - (part.toString().length - (lhv.toString().length + rhv.toString().length - 1)))
+    for (i in 1..1 - ((part.toString().length - (lhv.toString().length + rhv.toString().length - 1)) - delta))
         ops.write(" ")
     ops.write("$part")
     ops.close()
