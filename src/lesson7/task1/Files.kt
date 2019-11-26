@@ -657,9 +657,9 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
                 for (j in 0..prob - first.toString().length)
                     ops.write(" ")
                 ops.write("-$first\n")
-                for (j in 1..prob - abs(new.length - first.toString().length - 1))
+                for (j in 1..prob + 2 - max(new.length, first.toString().length + 1))
                     ops.write(" ")
-                for (j in 1..max(new.length, first.toString().length +1))
+                for (j in 1..max(new.length, first.toString().length + 1))
                     ops.write("-")
                 ops.newLine()
                 prob += 1
