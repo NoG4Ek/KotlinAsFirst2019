@@ -309,8 +309,17 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var i = 0
     var one = false
     var nFirst = true
+    var lastNEmp = ""
+
+    for (line in File(inputName).readLines().reversed())
+            if (!line.isEmpty()) {
+                lastNEmp = line
+                break
+            }
+
     outputStream.write("<html><body><p>")
     for (line in File(inputName).readLines()) {
+        File(inputName).readLines().last()
         if (line.isEmpty()) {
             if (!nFirst) {
                 if (!one)
@@ -328,7 +337,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                             if (i != wordCopy.length - 1 && wordCopy[i + 1] == '*') {
                                 if (inc.last() == "**") {
                                     wordCopy =
-                                        wordCopy.substring(0..i-1) + "</b>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
+                                        wordCopy.substring(0..i-1) + "</b>" + wordCopy.substring(i + 2) // условие пропуска некст хода
                                     inc.remove(inc.last())
                                     i = 0
                                     continue@loop
@@ -356,13 +365,13 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                             if (i != wordCopy.length - 1 && wordCopy[i + 1] == '~') {
                                 if (inc.last() == "~~") {
                                     wordCopy =
-                                        wordCopy.substring(0..i-1) + "</s>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
+                                        wordCopy.substring(0..i-1) + "</s>" + wordCopy.substring(i + 2) // условие пропуска некст хода
                                     inc.remove(inc.last())
                                     i = 0
                                     continue@loop
                                 } else {
                                     wordCopy =
-                                        wordCopy.substring(0..i-1) + "<s>" + wordCopy.substring(i + 2) // усдовие пропуска некст хода
+                                        wordCopy.substring(0..i-1) + "<s>" + wordCopy.substring(i + 2) // условие пропуска некст хода
                                     inc.add("~~")
                                     i = 0
                                     continue@loop
@@ -384,6 +393,8 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         }
         fc = 0
         outputStream.newLine()
+        if (line == lastNEmp)
+            break
     }
     outputStream.write("</p></body></html>")
     outputStream.close()
@@ -593,53 +604,66 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var new: Int
     var nextL: Int // Чтобы запомнить откуда опускать цифры
 
-    ops.write(" $lhv | $rhv\n-$first")
-    for (i in 1..lhv.toString().length - first.toString().length + 3)
-        ops.write(" ")
-    ops.write("$o\n")
-    for (i in 1..first.toString().length + 1)
-        ops.write("-")
-    ops.newLine()
-    // Ищем разницу
-    for (i in first.toString().indices)
-        fch += lhv.toString()[i].toString().toInt() * pow(10.0, (first.toString().length - i - 1).toDouble()).toInt()
-    fch -= first
-
-    for (j in 0..first.toString().length - fch.toString().length)
-        ops.write(" ")
-    ops.write("$fch")
-
-    if (o > 9) {
-        prob = first.toString().length
-        nextL = first.toString().length
-
-        next = lhv.toString()[nextL].toString().toInt()
-        ops.write("$next\n")
-
-        new = (fch.toString() + next.toString()).toInt()
-
-        for (i in 0..o.toString().length - 2) {
-            if (i != 0) {
-                next = lhv.toString()[nextL].toString().toInt()
-                ops.write("$next\n")
-                new = (fch.toString() + next.toString()).toInt()
-            }
-            first = rhv * o.toString()[i + 1].toString().toInt()
-
-            for (j in 0..prob - first.toString().length)
-                ops.write(" ")
-            ops.write("-$first\n")
-            for (j in 0..prob - first.toString().length)
-                ops.write(" ")
-            for (j in 0..first.toString().length)
+    if (lhv < rhv && lhv.toString().length != 1) {
+        ops.write("$lhv | $rhv\n")
+        for (i in 1..lhv.toString().length - 2)
+            ops.write(" ")
+        ops.write("-0   0\n")
+        for (i in 1..lhv.toString().length)
                 ops.write("-")
-            ops.newLine()
-            prob += 1
-            fch = new - first
-            for (j in 0..prob - fch.toString().length)
-                ops.write(" ")
-            ops.write("$fch")
-            nextL += 1
+        ops.write("\n$lhv")
+    } else {
+        ops.write(" $lhv | $rhv\n-$first")
+        for (i in 1..lhv.toString().length - first.toString().length + 3)
+            ops.write(" ")
+        ops.write("$o\n")
+        for (i in 1..first.toString().length + 1)
+            ops.write("-")
+        ops.newLine()
+        // Ищем разницу
+        for (i in first.toString().indices)
+            fch += lhv.toString()[i].toString().toInt() * pow(
+                10.0,
+                (first.toString().length - i - 1).toDouble()
+            ).toInt()
+        fch -= first
+
+        for (j in 0..first.toString().length - fch.toString().length)
+            ops.write(" ")
+        ops.write("$fch")
+
+        if (o > 9) {
+            prob = first.toString().length
+            nextL = first.toString().length
+
+            next = lhv.toString()[nextL].toString().toInt()
+            ops.write("$next\n")
+
+            new = (fch.toString() + next.toString()).toInt()
+
+            for (i in 0..o.toString().length - 2) {
+                if (i != 0) {
+                    next = lhv.toString()[nextL].toString().toInt()
+                    ops.write("$next\n")
+                    new = (fch.toString() + next.toString()).toInt()
+                }
+                first = rhv * o.toString()[i + 1].toString().toInt()
+
+                for (j in 0..prob - first.toString().length)
+                    ops.write(" ")
+                ops.write("-$first\n")
+                for (j in 0..prob - first.toString().length)
+                    ops.write(" ")
+                for (j in 0..first.toString().length)
+                    ops.write("-")
+                ops.newLine()
+                prob += 1
+                fch = new - first
+                for (j in 0..prob - fch.toString().length)
+                    ops.write(" ")
+                ops.write("$fch")
+                nextL += 1
+            }
         }
     }
     ops.close()
