@@ -611,7 +611,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         for (i in 1 until lhv.toString().length - first.toString().length)
             ops.write(" ")
         ops.write("-$first   $o\n")
-        for (i in 1..lhv.toString().length + first.toString().length + 1 - lhv.toString().length)
+        for (i in 1..max(lhv.toString().length, first.toString().length + 1))
                 ops.write("-")
         ops.newLine()
         for (i in 1..lhv.toString().length - (lhv - first).toString().length + first.toString().length + 1 - lhv.toString().length)
