@@ -308,16 +308,20 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var fc = 0
     var i = 0
     var one = false
+    var nFirst = true
     outputStream.write("<html><body><p>")
     for (line in File(inputName).readLines()) {
         if (line.isEmpty()) {
-            if(!one)
-                outputStream.write("</p><p>")
-            one = true
+            if (!nFirst) {
+                if (!one)
+                    outputStream.write("</p><p>")
+                one = true
+            }
             continue
         }
         for (word in line.split(" ")) {
             one = false
+            nFirst = false
                 wordCopy = word
                 loop@ while (i <= wordCopy.length - 1) {
                         if (wordCopy[i] == '*') {
@@ -605,7 +609,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         ops.write(" ")
     ops.write("$fch")
 
-    if (lhv / rhv > 0) {
+    if (o > 9) {
         prob = first.toString().length
         nextL = first.toString().length
 
