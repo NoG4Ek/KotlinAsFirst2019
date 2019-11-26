@@ -3,8 +3,7 @@
 package lesson7.task1
 
 import java.io.File
-import java.lang.Math.abs
-import java.lang.Math.pow
+import java.lang.Math.*
 
 /**
  * Пример
@@ -313,15 +312,15 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var ch = -1
 
     for (line in File(inputName).readLines().reversed())
-            if (line.isEmpty()) {
+            if (line.isEmpty())
                 lastNEmp++
+            else
                 break
-            }
 
     outputStream.write("<html><body><p>")
     for (line in File(inputName).readLines()) {
         ch ++
-        if (File(inputName).readLines().size - 1 - lastNEmp == ch)
+        if (File(inputName).readLines().size - lastNEmp == ch)
             break
         if (line.isEmpty()) {
             if (!nFirst) {
@@ -602,7 +601,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var fch = 0
     var next: Int
     var prob: Int
-    var new: Int
+    var new: String
     var nextL: Int // Чтобы запомнить откуда опускать цифры
 
     if (lhv / rhv < 9) {
@@ -645,26 +644,26 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
             next = lhv.toString()[nextL].toString().toInt()
             ops.write("$next\n")
 
-            new = (fch.toString() + next.toString()).toInt()
+            new = fch.toString() + next.toString()
 
             for (i in 0..o.toString().length - 2) {
                 if (i != 0) {
                     next = lhv.toString()[nextL].toString().toInt()
                     ops.write("$next\n")
-                    new = (fch.toString() + next.toString()).toInt()
+                    new = fch.toString() + next.toString()
                 }
                 first = rhv * o.toString()[i + 1].toString().toInt()
 
                 for (j in 0..prob - first.toString().length)
                     ops.write(" ")
                 ops.write("-$first\n")
-                for (j in 0..prob - first.toString().length)
+                for (j in 1..prob - (new.length - 1 - first.toString().length))
                     ops.write(" ")
-                for (j in 0..first.toString().length)
+                for (j in 1..max(new.length, first.toString().length +1))
                     ops.write("-")
                 ops.newLine()
                 prob += 1
-                fch = new - first
+                fch = new.toInt() - first
                 for (j in 0..prob - fch.toString().length)
                     ops.write(" ")
                 ops.write("$fch")

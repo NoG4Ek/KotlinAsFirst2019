@@ -221,8 +221,8 @@ Basic, Ruby, Swift.
         val result = File("temp.html").readText().replace(Regex("[\\s\\n\\t]"), "")
         val expected =
             """
-<html><body><p>MN|rYo<i>:Z,e)</i>ay#3T`mQZ9<b>hgyNpf<s>U\"q]=Kw;</s>9\\9<s>S\\m</s>,nj</b>)<i>/.Mn:7oc3-<b>o)X</b>9hCvOzWIdt1</i>+}iF9{%2<i></i>efU7E%fWa-B$ KZ<b>;<i>usQZ'</i></b>QgfU]-}.Cj<s>;\\7H<i>gSwmy+iH6GI^Pa</i>7A<b>qU/<i>Y(lB\\-@2</i>(n`O<i>b!'BMp2B_]bgd5T%</i>,<i></i>\"O?Km`<i></i>%XkXnbdK3Yf</b>77OVBIiUXwl5_=YKG6<b>nu<i>4-\\w}5C</i><i>B#</i>nABF</b>@<i>zg3Ql9=X</i>O36//<b>u1A\\t+@`f=or</b>X<b>|5fen%23SzLn,;a<i>0e7uDdcM3h</i>jj<i>;qn0$|</i>33[&Lam</b>Z5-733A]U<b>`|</b>};9};</s>iq!vX|4</p><p>M45/H_<i>La4\\;&</i>[M&u|?e#o]$[omO[|_uiAD013qFrg,]b2)cW=:uprB/58[T<i>Tspuak<b>N[p|gmoU4?BHc;|6Z|hnSO</b>8qYa6</i>R0t3Lh[;}WtyT<b>R</b>uL/R{aHW@&1<b>@=|Gv4(\"K54<s></s>p</b>0;VF#@}'A\\|H:9]BAk)]ES#KBndhkT<i></i>e<b>.$ YdRIq}5IqQI</b>f'?L<b>feSSZ!kFU<s>CV</s>F</b>8&<s>l+$ TC'S!HJLa'we<b>T<i>f</i>:s\"P|zkdKc]HU!L9{Ix&1A3z-x</b>=s+\\[jpHMv:J&zQmI'pKm9KVQH<b>cEnrPE$/<i>Y^</i>LZ/&+Gc</b>HzCYabm;<b>FDC#1</b>R</s>6'jKW5<s>b|W</s>Z-`4KCn{GsBtx}G@<b>hxDgF</b><s>-p^&Ad<b>wB?T4'_m2f}zY)WPy`@8\"s8s\"</b>V%6<b>51</b>-v;</s>vLZ\"Y]Cu;k&l<b>_0+NpuMFnhnRc+|FZ?g\"%Rmgy2I{&@F}9Z!KASm@L?J</b>(hAp^7<b>[C<s><i>n'C#q9do-a</i>wvX<i>6j}+z]K%</i>9</s>dI</b>H;<b>W[zp,[</b>T$<s>EvtQzms</s>_\\E<b>/<s>%{o^k[7\\q</s>kTH</b>@^^}1}_AI<s>`@b)</s>l<i>--c8bu-Rq<s></s><b>8u/</b>R7L-E.<b>bRKRH<s>V){y</s>A</b>58oAA</i><s>Y#</s>d<b></b>ZB<s></s>I(<i>CKI<b>Roq<s>DG,A{</s>Vhk5,</b>9jV)|3</i>a<s></s>!w#HCgKwQV\"<s>oYS(F0<b></b>=Uf\\f{`w<b>^!Ydh?<i>$ t</i>WKlLBz9W</b>2Ry<b>i</b>@l]6:x\\yPB<i>L}G9K<b>XApx=</b>?r</i>/</s>I=a<s>lU<i></i>S4<b>xJ</b>`.H3u{c[n<b>z</b>N^</s>11xp3jT1<s>/fc<b>&</b>?K4</s>.wSph\"(]%Bd<b>?=.D<i><s>y%Z</s>N</i></b>R<s>qv2WS.&C4f9qs(</s>Mo<i>Xy</i><s>`I<b><i>jz\"=-B</i>\\xq!hx<i>:</i>SA<i>VyUC</i>Jc#`_\\<i>[v#;d%{</i>^9k</b><b>Z\\&?<i>;</i>M<i>7k</i>}n</b>2]6\\5</s>UNp<s>;0</s>d{C<s>K</s>bq6?0MQv(<i>N?,i;Bl<b>\"L9.@\"`Y<s>?y(R8\"</s>aInmB</b>M[)</i>Q<s><i>z<b>MFQ;AAm6_/6</b>!,<b>_</b><b></b>QV</i>p,u2Z</s><b>!n</b>8A<i><b>fJIPL</b>Kr&<s>u1}?</s>}7<b>8sC</b>]'OyoREF<s></s>.i<s></s>G8,k{:q@;/</i>`<i></i>m<b>`e{<s>W6</s></b>(N:</p><p>3B8&@,KceG6<b>/U/</b>Tf;m<i>hpD<b>@@</b>N=+9=IK[<s></s>t</i>8sW;_<b>2e<s>EYIt</s>{.Pj</b>X'v<s>f$)8ak.cqz]t<i>`ZZ)</i><b>hC</b><i>IdCnM</i>%<b>)</b>1;Q)G<i>dS3</i>ScME</s>H;<i>x<b>yF#)BN</b>CUcvDEX<s>$^q$</s>]#&0?Y8K^6<b>u<s>`PDD</s>vfd</b>#`|4+</i>d,U/Q0<s></s>'%IA<i>Y`0<s>1}D$\"B<b>{6QO</b>Li</s></i>q#j<s>US<i>ni:</i>kO;</s>ii[l_i45@Z\"FlFbWKDLJ<i>=<s>Y</s>iq</i>JdXZT</p></body></html>
-""".trimIndent().replace(Regex("[\\s\\n\\t]"), "")
+<html><body><p>]</p><p>-NU{uvxbo2<s>'.%<i>ov1Bkk=q%_P\"a9oi</i>@F3,<b>e'-}Z0X$ h7<i>DZNG'0TZ=|</i>H<i>|-5%fa]OTtfh$ Ur!</i>j`E]SW+RX]ibu=%Md,</b>%\"fw<i></i>4v%</s>@Xgk(R.<b>RW$ tZ?</b>D^,<s>R+<b>[_t</b>-SDDh</s>s!8}5YW''<i>TQZ:y7c</i>U&Ae<b>Q&Tg<s>W/^,I</s>6/{-0aJ<s>JhG{NIz</s>xM</b>3bp;a%eU<i>R<b>@</b>MQr2;1%NLRy1tPNM</i>GjNC+ecs]ijV)Mmdjl&nSNBe+D3ZlEW$ {'$'}9WU}//!odqZG@qU]`@}J!w<b>=z\\Q6UL</b>E<i></i>+3gnS^</p><p>x-7XsW(%2js'fr?x2;D\\'iv;8ETy;\\,P{k3`7sk[{</p><p>9</p></body></html>"""
+                .trimIndent().replace(Regex("[\\s\\n\\t]"), "")
         assertEquals(expected, result)
 
         File("temp.html").delete()
@@ -370,13 +370,16 @@ Basic, Ruby, Swift.
         }
 
         test(
-            355,
-            355,
+            252713,
+            23344,
             """
-               355 | 355
-              -355   1
-              ----
-                 0
+                252713 | 23344
+               -23344    10
+               ------
+                 19273
+                    -0
+                 -----
+                 19273
              """
         )
 
