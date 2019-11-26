@@ -309,17 +309,20 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var i = 0
     var one = false
     var nFirst = true
-    var lastNEmp = ""
+    var lastNEmp = 0
+    var ch = -1
 
     for (line in File(inputName).readLines().reversed())
-            if (!line.isEmpty()) {
-                lastNEmp = line
+            if (line.isEmpty()) {
+                lastNEmp++
                 break
             }
 
     outputStream.write("<html><body><p>")
     for (line in File(inputName).readLines()) {
-        File(inputName).readLines().last()
+        ch ++
+        if (File(inputName).readLines().size - 1 - lastNEmp == ch)
+            break
         if (line.isEmpty()) {
             if (!nFirst) {
                 if (!one)
@@ -393,8 +396,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         }
         fc = 0
         outputStream.newLine()
-        if (line == lastNEmp)
-            break
     }
     outputStream.write("</p></body></html>")
     outputStream.close()
@@ -604,14 +605,19 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var new: Int
     var nextL: Int // Чтобы запомнить откуда опускать цифры
 
-    if (lhv < rhv && lhv.toString().length != 1) {
-        ops.write("$lhv | $rhv\n")
-        for (i in 1..lhv.toString().length - 2)
+    if (lhv / rhv < 9) {
+        for (i in 1..first.toString().length + 1 - lhv.toString().length)
             ops.write(" ")
-        ops.write("-0   0\n")
-        for (i in 1..lhv.toString().length)
+        ops.write("$lhv | $rhv\n")
+        for (i in 1 until lhv.toString().length - first.toString().length)
+            ops.write(" ")
+        ops.write("-$first   $o\n")
+        for (i in 1..lhv.toString().length + first.toString().length + 1 - lhv.toString().length)
                 ops.write("-")
-        ops.write("\n$lhv")
+        ops.newLine()
+        for (i in 1..lhv.toString().length - (lhv - first).toString().length + first.toString().length + 1 - lhv.toString().length)
+            ops.write(" ")
+        ops.write("${lhv - first}")
     } else {
         ops.write(" $lhv | $rhv\n-$first")
         for (i in 1..lhv.toString().length - first.toString().length + 3)
