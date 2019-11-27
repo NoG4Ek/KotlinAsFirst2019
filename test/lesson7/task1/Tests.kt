@@ -221,8 +221,8 @@ Basic, Ruby, Swift.
         val result = File("temp.html").readText().replace(Regex("[\\s\\n\\t]"), "")
         val expected =
             """
-<html><body><p>]</p><p>-NU{uvxbo2<s>'.%<i>ov1Bkk=q%_P\"a9oi</i>@F3,<b>e'-}Z0X$ h7<i>DZNG'0TZ=|</i>H<i>|-5%fa]OTtfh$ Ur!</i>j`E]SW+RX]ibu=%Md,</b>%\"fw<i></i>4v%</s>@Xgk(R.<b>RW$ tZ?</b>D^,<s>R+<b>[_t</b>-SDDh</s>s!8}5YW''<i>TQZ:y7c</i>U&Ae<b>Q&Tg<s>W/^,I</s>6/{-0aJ<s>JhG{NIz</s>xM</b>3bp;a%eU<i>R<b>@</b>MQr2;1%NLRy1tPNM</i>GjNC+ecs]ijV)Mmdjl&nSNBe+D3ZlEW$ {'$'}9WU}//!odqZG@qU]`@}J!w<b>=z\\Q6UL</b>E<i></i>+3gnS^</p><p>x-7XsW(%2js'fr?x2;D\\'iv;8ETy;\\,P{k3`7sk[{</p><p>9</p></body></html>"""
-                .trimIndent().replace(Regex("[\\s\\n\\t]"), "")
+                <html><body><p>ddd</p></body></html>
+                """.trimIndent().replace(Regex("[\\s\\n\\t]"), "")
         assertEquals(expected, result)
 
         File("temp.html").delete()
