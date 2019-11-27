@@ -99,6 +99,8 @@ data class Segment(val begin: Point, val end: Point) {
 
     override fun hashCode() =
         begin.hashCode() + end.hashCode()
+
+    fun length() = sqrt(sqr(end.x - begin.x) + sqr(end.y - begin.y))
 }
 
 /**
@@ -148,7 +150,7 @@ fun circleByDiameter(diameter: Segment): Circle = TODO()
  * или: y * cos(angle) = x * sin(angle) + b, где b = point.y * cos(angle) - point.x * sin(angle).
  * Угол наклона обязан находиться в диапазоне от 0 (включительно) до PI (исключительно).
  */
-class Line private constructor(val b: Double, val angle: Double) {
+class Line(val b: Double, val angle: Double) {
     init {
         require(angle >= 0 && angle < PI) { "Incorrect line angle: $angle" }
     }
@@ -188,8 +190,13 @@ fun lineBySegment(s: Segment): Line = TODO()
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line =
-    Line(a, atan((b.y - a.y) / (b.x - a.x)))
+fun lineByPoints(a: Point, b: Point): Line {
+    val k = (b.y - a.y) / (b.x - a.x)
+    return if (k >= 0)
+        Line(a, atan(k) % PI)
+    else
+        Line(a, (2 * PI + atan(k)) % PI)
+}
 
 /**
  * Сложная
@@ -197,11 +204,16 @@ fun lineByPoints(a: Point, b: Point): Line =
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
+    val x = (a.x + b.x) / 2
+    val y = (a.y + b.y) / 2
+    val k = (b.x - a.x) / (b.y - a.y) * -1
     if (b.x - a.x == 0.0)
-        return Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), 0.0)
+        return Line(Point(x, y), 0.0)
     if (b.y - a.y == 0.0)
-        return Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), PI/2)
-    return Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), atan((b.x - a.x) / (b.y - a.y) * -1))
+        return Line(Point(x, y), PI/2)
+    return if (k >= 0)
+        Line(Point(x, y), atan(k) % PI)
+    else Line(Point(x, y), (2 * PI + atan(k)) % PI)
 }
 
 /**
@@ -237,5 +249,20 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle =
  * три точки данного множества, либо иметь своим диаметром отрезок,
  * соединяющий две самые удалённые точки в данном множестве.
  */
-fun minContainingCircle(vararg points: Point): Circle = TODO()
+fun minContainingCircle(vararg points: Point): Circle {
+    val longest = diameter(*points)
+    var criminal = Point(0.0, 0.0)
+    var cLen = 0.0
+    val center = Point((longest.begin.x + longest.end.x) / 2, (longest.begin.y + longest.end.y) / 2)
+
+    for (point in points){
+            if (center.distance(point) > longest.length() / 2) {
+            criminal = point
+            cLen = center.distance(point)
+        }
+    }
+    if (cLen == 0.0)
+        return Circle(center, (longest.length() / 2))
+    return circleByThreePoints(longest.begin, longest.end, criminal)
+}
 

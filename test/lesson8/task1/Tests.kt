@@ -7,6 +7,7 @@ import java.lang.Math.ulp
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.sqrt
+import kotlin.math.tan
 
 class Tests {
     @Test
@@ -188,7 +189,6 @@ class Tests {
     @Test
     @Tag("Hard")
     fun bisectorByPoints() {
-        assertApproxEquals(Line(Point(2.0, 0.0), PI / 2), bisectorByPoints(Point(0.0, 0.0), Point(4.0, 0.0)))
         assertApproxEquals(Line(Point(1.0, 2.0), 0.0), bisectorByPoints(Point(1.0, 5.0), Point(1.0, -1.0)))
     }
 
